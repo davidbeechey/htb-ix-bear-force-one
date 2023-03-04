@@ -8,6 +8,7 @@
 
 #define WARNING_BUZZER 13
 
+const String sensor_status[5] = {"Dangerous", "Unhealthy", "Not ideal", "Good", "Excellent"};
 const String network_status[3] = {"Connected", "Disconnected", "Failed"};
 
 // Network constants and objects

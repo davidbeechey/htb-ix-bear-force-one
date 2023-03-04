@@ -12,7 +12,6 @@
 #define VOC_HIGH 200
 #define VOC_OKAY 100
 #define VOC_EXCELLENT 0
-const String sensor_status[5] = {"Dangerous", "Unhealthy", "Not ideal", "Good", "Excellent"};
 
 // Initalise the VOC sensor and its data collection instance
 Adafruit_SGP40 sgp;
