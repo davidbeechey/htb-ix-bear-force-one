@@ -15,7 +15,8 @@ class Mode(Enum):
 
 
 class CO2Mock:
-    def __init__(self, buidling, room, mode: Mode):
+    def __init__(self, campus, buidling, room, mode: Mode):
+        self.campus = campus
         self.building = buidling
         self.room = room
         self.mode = mode
@@ -33,7 +34,7 @@ class CO2Mock:
     def post_to_api(self):
         co2_reading = self.get_co2_reading()
         data = {'key': 'co2_mock',
-                'location': 'building: ' + self.building + ' -  room: ' + self.room,
+                'location': self.campus + ' - ' + self.building + ' - ' + self.room,
                 'data': co2_reading}
         # sending post request and saving response as response object
         r = requests.post(url=API_ENDPOINT, json=data)
@@ -41,5 +42,7 @@ class CO2Mock:
 
 
 if __name__ == "__main__":
-    co2_mock = CO2Mock('Kings', 'TheRoomWhereItHappened', Mode.RANDOM)
-    print(co2_mock.post_to_api())
+    for i in range(1, 6):
+        co2_mock = CO2Mock('Central', "Appleton Tower",
+                           'R' + str(i), Mode.NORMAL)
+        co2_mock.post_to_api()
