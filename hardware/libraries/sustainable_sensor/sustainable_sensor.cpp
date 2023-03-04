@@ -1,9 +1,12 @@
 #include "sustainable_sensor.h"
 
-SensorModule::SensorModule(String display_name, String location)
+SensorModule::SensorModule(String sensor_type, String display_name, String campus, String building, String room)
 {
-  display_name = display_name;
-  location_ = location;
+  sensor_type_ = sensor_type;
+  display_name_ = display_name;
+  campus_ = campus;
+  building_ = building;
+  room_ = room;
   int network_status;
   bool data_server_status;
 
@@ -39,12 +42,31 @@ void SensorModule::displayValues(String message)
   return;
 }
 
+// TODOLater: Make this string concatenation better
 void SensorModule::sendData()
 {
   if (WiFi.status() == WL_CONNECTED && client.connected())
   {
-    // TODOLater: Make a better POST fucntion than this!
-    client.write(sensor_value_);
+    http.begin(client, DATA_SERVER);
+    http.addHeader("Content-Type", "application/json");
+    String httpRequestData = "{\",\"key\":\"";
+    httpRequestData += sensor_type_;
+    httpRequestData += "\",\"location\":\"";
+    httpRequestData += campus_;
+    httpRequestData += "-";
+    httpRequestData += building_;
+    httpRequestData += "-";
+    httpRequestData += room_;
+    httpRequestData += "\",\"data\":\"";
+    httpRequestData += sensor_value_;
+    httpRequestData == "\"}";
+    // int http_code = http.POST("{\"api_key\":\"" + API_KEY + "\",\"sensor\":\"" + sensor_type_ + "\",\"value1\":\"24.25\",\"value2\":\"49.54\",\"value3\":\"1005.14\"}");
+    int http_code = http.POST(httpRequestData);
+    if (DEBUG_FLAG)
+    {
+      Serial.println("HTTP POST Result: " + http_code);
+    }
+    http.end();
   }
   else
   {
@@ -55,6 +77,6 @@ void SensorModule::sendData()
 
 void SensorModule::networkConnect()
 {
-  // TODOLater: Deal with this 😎
+  // TODOLater: Implement
   return;
 }
