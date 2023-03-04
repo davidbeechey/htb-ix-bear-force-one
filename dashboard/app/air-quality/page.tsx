@@ -1,10 +1,14 @@
 import { Card } from "@/components";
+import { getCo2SensorData } from "@/sensors/co2_sensor";
 import { ChartData } from "chart.js";
 import { Sensor } from "../types";
 import AllSensors from "./AllSensors";
 import SensorGraph from "./SensorGraph";
 
 async function getAirQualitySensors() {
+    const data = await getCo2SensorData();
+    console.log(data)
+
     const tempData: ChartData<"line", number[], string> = {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [
