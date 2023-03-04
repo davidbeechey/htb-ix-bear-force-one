@@ -16,7 +16,6 @@
 #define CO2_HIGH 1000
 #define CO2_OKAY 800
 #define CO2_EXCELLENT 400
-const String sensor_status[5] = {"Dangerous", "Unhealthy", "Not ideal", "Good", "Excellent"};
 
 // Initalise the CO2 sensor and its data collection instance
 SensorModule co2("CO2", "CO2 (ppm): ", CAMPUS, BUILDING, ROOM);
@@ -60,8 +59,6 @@ void loop()
     i = 4;
   }
   co2.displayValues(sensor_status[i]);
-
   co2.sendData();
-
   delay(1000);
 }
