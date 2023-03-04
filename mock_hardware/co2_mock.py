@@ -12,6 +12,7 @@ class Mode(Enum):
     NORMAL = 2
     CRITICAL = 3
     DANGER = 4
+    INVALID = 5
 
 
 class CO2Mock:
@@ -28,8 +29,10 @@ class CO2Mock:
             return random.randint(350, 800)
         elif (self.mode == Mode.CRITICAL):
             return random.randint(800, 1500)
-        else:
+        elif (self.mode == Mode.DANGER):
             return random.randint(1500, 10000)
+        else:
+            return random.randint(-5000, 0)
 
     def post_to_api(self):
         co2_reading = self.get_co2_reading()
@@ -39,10 +42,3 @@ class CO2Mock:
         # sending post request and saving response as response object
         r = requests.post(url=API_ENDPOINT, json=data)
         return r.status_code
-
-
-if __name__ == "__main__":
-    for i in range(1, 6):
-        co2_mock = CO2Mock('Central', "Appleton Tower",
-                           'R' + str(i), Mode.NORMAL)
-        co2_mock.post_to_api()
