@@ -26,6 +26,13 @@ export const handler = async (event, context) => {
           let location = decodeURIComponent(event.queryStringParameters.location) || 'none'
           let campus = decodeURIComponent(event.queryStringParameters.campus) || 'none'
           let type = decodeURIComponent(event.queryStringParameters.type) || 'none'
+          if(type == 'none' && location == 'none' && campus == 'none') {
+            responseCode = 400;
+            responseBody = {
+              msg: 'Bad request'
+            }
+            break;
+          }
           const params = {
             TableName: tableName,
             FilterExpression: '#ID = :ID and #campus = :campusval and #location = :locationval',
