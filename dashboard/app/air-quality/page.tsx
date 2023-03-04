@@ -7,7 +7,7 @@ import SensorGraph from "./SensorGraph";
 
 async function getAirQualitySensors() {
     const data = await getCo2SensorData();
-    console.log(data)
+    console.log(data);
 
     const tempData: ChartData<"line", number[], string> = {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
