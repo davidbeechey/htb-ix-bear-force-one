@@ -7,12 +7,9 @@ SensorModule::SensorModule(String sensor_type, String display_name, String campu
   campus_ = campus;
   building_ = building;
   room_ = room;
-  int network_status;
-  bool data_server_status;
 
-  // Connect to local network, get real time, and connect to data server
-  network_status = WiFi.begin(SSID, PASSWORD);
-  data_server_status = client.connect(data_server, DATA_SERVER_PORT);
+  // Connect to local network
+  int network_state = WiFi.begin(SSID, PASSWORD);
 
   display.init();
   display.backlight();
@@ -51,9 +48,9 @@ void SensorModule::sendData()
     http.addHeader("Content-Type", "application/json");
     String httpRequestData = "{\",\"key\":\"";
     httpRequestData += sensor_type_;
-    httpRequestData += "\",\"location\":\"";
+    httpRequestData += "\",\"campus\":\"";
     httpRequestData += campus_;
-    httpRequestData += "-";
+    httpRequestData += "\",\"location\":\"";
     httpRequestData += building_;
     httpRequestData += "-";
     httpRequestData += room_;
@@ -68,15 +65,27 @@ void SensorModule::sendData()
     }
     http.end();
   }
-  else
-  {
-    networkConnect();
-  }
   return;
 }
 
-void SensorModule::networkConnect()
+void SensorModule::displayNetworkStatus()
 {
-  // TODOLater: Implement
+  int network_state = WiFi.status();
+  if (DEBUG_FLAG)
+  {
+    Serial.print("Network error!");
+    Serial.print("Current network state code: ");
+    Serial.println(network_state);
+  }
+  display.setCursor(5, 3);
+  if (network_state != WL_NO_SHIELD)
+  {
+    display.print(network_states[network_state]);
+  }
+  if (network_state != WL_CONNECTED)
+  {
+    WiFi.disconnect();
+    network_state = WiFi.begin(SSID, PASSWORD);
+  }
   return;
 }

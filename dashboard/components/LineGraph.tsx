@@ -27,14 +27,6 @@ ChartJS.register(
     Legend
 );
 
-type DataVisualization = {
-    labels: string[];
-    datasets: {
-        label: string;
-        data: number[];
-    };
-};
-
 const options = {
     responsive: true,
     plugins: {

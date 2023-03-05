@@ -1,71 +1,72 @@
 import { Card } from "@/components";
-import { getCo2SensorData } from "@/sensors/co2_sensor";
 import { ChartData } from "chart.js";
 import { Sensor } from "../types";
-import AllSensors from "./AllSensors";
-import SensorGraph from "./SensorGraph";
+import AirQualityGraph from "./AirQualityGraph";
 
-async function getAirQualitySensors() {
-    const data = await getCo2SensorData();
-    console.log(data)
+async function getAirQuality() {
+    const sensorsData = await axios
+        .get("https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=co2_mock")
+        .then((res) => res.data);
 
-    const tempData: ChartData<"line", number[], string> = {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [
-            {
-                label: "# of Votes",
-                data: [12, 40, 3, 5, 2, 3],
-            },
-        ],
-    };
+    const sensors: Sensor[] = sensorsData.sensors || [];
 
-    const temp: Sensor[] = [
-        {
-            location: "Test Location 1",
-            data: tempData,
-        },
-        {
-            location: "Test Location 2",
-            data: tempData,
-        },
-        {
-            location: "Test Location 3",
-            data: tempData,
-        },
-        {
-            location: "Test Location 4",
-            data: tempData,
-        },
-        {
-            location: "Test Location 5",
-            data: tempData,
-        },
-        {
-            location: "Test Location 6",
-            data: tempData,
-        },
-    ];
+    return sensors;
+}
 
-    return temp;
+async function getCampuses() {
+    const data = await axios
+        .get(
+            "https://nbmgmb9465.execute-api.eu-west-1.amazonaws.com/DEV/university?university=University%20of%20Edinburgh"
+        )
+        .then((res) => res.data);
+
+    const campuses: string[] = data.university.Items[0].campuses || [];
+
+    return campuses;
 }
 
 export default async function AirQuality() {
-    const sensors = await getAirQualitySensors();
+    const sensors = await getAirQuality();
+    const campuses = await getCampuses();
+
+    console.log("sensors", sensors);
+    console.log("campuses", campuses);
+
+    // TODO: temp, to be replaced with Ishan's function for averaging sensors
+    const averageAirQuality = sensors[0];
 
     return (
         <div className="space-y-4">
             <div className="space-y-4">
-                <Card>
-                    <h1 className="text-3xl">All Sensors</h1>
-                </Card>
-                {/* TODO: temp sensor */}
-                <SensorGraph sensor={sensors[0]} />
+                <AirQualityGraph
+                    data={averageAirQuality.data}
+                    title="Average Air Quality"
+                    subtitle="Across all sensors"
+                    timestamps={averageAirQuality.timestamps}
+                />
             </div>
             <div className="space-y-4">
                 <Card>
                     <h1 className="text-3xl">All Sensors</h1>
                 </Card>
-                <AllSensors sensors={sensors} />
+                <div className="grid grid-cols-2 gap-4">
+                    {campuses.map((campus) => {
+                        // TODO: temp, to be replaced with Ishan's function for averaging sensors
+                        const averageSensor = sensors.find((sensor) => sensor.campus === campus);
+                        if (!averageSensor) return null;
+                        return (
+                            <Link href={`/air-quality/${campus}`}>
+                                <AirQualityGraph
+                                    data={averageSensor.data}
+                                    title={campus}
+                                    subtitle="Average Air Quality"
+                                    timestamps={averageSensor.timestamps}
+                                    hover
+                                />
+                            </Link>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
