@@ -27,7 +27,6 @@ export default async function EnergyConsumption({
 
     console.log("sensors", sensors);
 
-    // TODO: temp, to be replaced with Ishan's function for averaging sensors
     const currentEnergyConsumption = sensors.reduce((acc, sensor) => {
         const lastValue = sensor.data[sensor.data.length - 1];
         return acc + lastValue;

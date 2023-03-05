@@ -1,4 +1,5 @@
 import { Card } from "@/components";
+import { averageFromSensors } from "@/functions/averageAirQuality";
 import axios from "axios";
 import Link from "next/link";
 import { Sensor } from "../../types";
@@ -54,13 +55,16 @@ export default async function EnergyConsumption({ params }: { params: { universi
                 </Card>
             </div>
             <div className="space-y-4">
-                <HeatMap sensors={sensors} campuses={campuses} />
+                <HeatMap sensors={sensors} campuses={campuses} university={params.university} />
             </div>
             <div className="grid grid-cols-2 gap-4">
                 {campuses.map((campus) => {
-                    // TODO: temp, to be replaced with Ishan's function for averaging sensors
-                    const averageSensor = sensors.find((sensor) => sensor.campus === campus);
+                    // const averageSensor = averageFromSensors(
+                    //     sensors.filter((sensor) => sensor.campus == campus)
+                    // );
+                    const averageSensor = sensors.filter((sensor) => sensor.campus == campus)[0];
                     if (!averageSensor) return null;
+                    console.log("averageSensor", averageSensor);
                     return (
                         <Link href={`/${params.university}/energy-consumption/${campus}`}>
                             <EnergyConsumptionGraph

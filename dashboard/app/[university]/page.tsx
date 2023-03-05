@@ -1,25 +1,45 @@
-"use client";
-
 import { Card } from "@/components";
-import ConfettiExplosion, { ConfettiProps } from "react-confetti-explosion";
-import { useState, useEffect } from "react";
+import { scoreSensor } from "@/functions/scoring";
+import axios from "axios";
+import { Sensor } from "../types";
+import ConfettiTime from "./ConfettiTime";
 
-const largeProps: ConfettiProps = {
-    force: 0.8,
-    duration: 3000,
-    particleCount: 300,
-    width: 1600,
-    colors: ["#041E43", "#1471BF", "#5BB4DC", "#FC027B", "#66D805"],
-};
+async function getAirQualitySensors() {
+    const data = await axios
+        .get(`https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=co2`)
+        .then((res) => res.data);
 
-export default function Page({ params }: { params: { university: string } }) {
-    const [isLargeExploding, setIsLargeExploding] = useState(false);
+    const sensors: Sensor[] = data.sensors;
 
-    const SCORE = 100;
+    return sensors;
+}
 
-    useEffect(() => {
-        if (SCORE > 80) setIsLargeExploding(true);
-    }, [SCORE]);
+async function getGoals(university: string) {
+    const data = await axios
+        .get(
+            `https://wvhaz86wh2.execute-api.eu-west-1.amazonaws.com/DEV/goals?university=${university}`
+        )
+        .then((res) => res.data);
+
+    console.log(data.university.items);
+    return data.university.Items;
+}
+
+export default async function Page({ params }: { params: { university: string } }) {
+    const GOALS = await getGoals(params.university);
+
+    let AIR_QUALITY_SCORE: string | null = null;
+    if (GOALS.length > 0) {
+        // Air Quality Goal
+        const AIR_QUALITY_SENSORS = await getAirQualitySensors();
+        const AIR_QUALITY_GOAL = GOALS[0]["co2_concentration"];
+        AIR_QUALITY_SCORE = AIR_QUALITY_SENSORS.reduce((acc: number, sensor: Sensor) => {
+            const AVG_AIR_QUALITY =
+                sensor.data.reduce((acc: number, value: number) => acc + value, 0) /
+                sensor.data.length;
+            return acc + scoreSensor(AVG_AIR_QUALITY, 4500);
+        }, 0).toFixed(0);
+    }
 
     return (
         <div className="space-y-8">
@@ -27,16 +47,33 @@ export default function Page({ params }: { params: { university: string } }) {
                 Overview - {decodeURIComponent(params.university)}
             </h1>
             <div className="flex gap-8">
-                <Card className="max-w-max">
-                    <>{isLargeExploding && <ConfettiExplosion {...largeProps} />}</>
-                    <h2 className="text-2xl font-bold">
-                        Score ({isLargeExploding ? "true" : "false"})
-                    </h2>
-                    <p className="text-6xl text-green-600 font-black">{SCORE}</p>
-                </Card>
-                <Card className="">
-                    <h2 className="text-2xl font-bold">Goals</h2>
-                </Card>
+                {AIR_QUALITY_SCORE ? (
+                    <>
+                        <Card className="max-w-max">
+                            <ConfettiTime show={parseInt(AIR_QUALITY_SCORE) >= 70} />
+                            <h2 className="text-2xl font-bold">Sustainability Score</h2>
+                            <p className="text-6xl text-green-600 font-black">
+                                {AIR_QUALITY_SCORE}
+                            </p>
+                        </Card>
+                        <Card className="">
+                            <h2 className="text-2xl font-bold">Goals</h2>
+                            <div>
+                                {GOALS.map((goal: any) => {
+                                    return (
+                                        <div className="flex gap-4">
+                                            <p>Air Quality Score: {AIR_QUALITY_SCORE}</p>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </Card>
+                    </>
+                ) : (
+                    <Card>
+                        <p>No Goals Set</p>
+                    </Card>
+                )}
             </div>
         </div>
     );

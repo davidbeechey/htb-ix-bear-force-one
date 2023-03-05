@@ -5,11 +5,6 @@ import { NavLink } from "../NavLink";
 import Providers from "../Providers";
 import { Sensor } from "../types";
 
-export const metadata = {
-    title: "Sustainability Management System",
-    description: "",
-};
-
 const ADMIN_LINKS = [
     {
         href: "/admin",
