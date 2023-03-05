@@ -2,10 +2,14 @@
 ## **Bear-ly Sustainable**
 
 ![flag](https://cdn.discordapp.com/attachments/1072492927047172146/1081844162955055174/flag.png)
+![contributors_badge](https://img.shields.io/github/contributors/davidbeechey/htb-ix-bear-force-one)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/davidbeechey/htb-ix-bear-force-one)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/davidbeechey/htb-ix-bear-force-one)
 ![aws](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
 ![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
 ![arduino](https://img.shields.io/badge/Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white)
+
 
 ### Overview
 With a focus on the UN's Sustainable Development Goals, our project is a serverless solution provided to Universities for measuring, monitoring, and improving sustainability across multiple campuses. Data is gathered by a series of Arduino-based modules which upload gathered data to an online dashboard hosted with AWS.
@@ -23,6 +27,7 @@ The project allows for a high degree of scalability across universities of diffe
   <img src="https://user-images.githubusercontent.com/58626285/222949840-a8d25fbd-723b-4c42-961c-ab624364206f.png" width="100" height="100">
   <img src="https://user-images.githubusercontent.com/58626285/222949897-6e4e58b8-b1d9-47d5-9b2e-526a85794e57.png" width="100" height="100">
 </p>
+
 
 ### Software Overview
 
