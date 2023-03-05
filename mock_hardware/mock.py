@@ -3,6 +3,8 @@ from typing import Callable
 import time
 import random
 
+university = ["University of Edinburgh", "University of Bristol",
+              "University of Birmingham", "University of Cambridge", "University of London"]
 map_dict = {"Kings": ["Nucleus", "Sanderson", "JCMB", "Murchison",
                       "Fleeming_Jenkings", "Swann_Building", "Grant_Institute", "Alrick"],
             "Central": ["Appleton", "Informatics_Forum", "Potterow", "Teviot", "Business_School", "Gordon_Aikman_Theatre", "McEwan_Hall"],
@@ -104,11 +106,12 @@ if __name__ == "__main__":
             print("Invalid number of sensors")
             continue
         for i in range(num_sensors):
+            uni = random.choice(university)
             campus = random.choice(list(map_dict.keys()))
             building = map_dict[campus][random.randint(
                 0, len(map_dict[campus]) - 1)]
             room = rooms[random.randint(0, len(rooms) - 1)]
-            sensor = MockSensor("University of Edinburgh", sensor_type, campus, building,
+            sensor = MockSensor(uni, sensor_type, campus, building,
                                 room, mode, get_sensor_read(sensor_id, mode))
             for i in range(10):
                 response = sensor.post_to_api()

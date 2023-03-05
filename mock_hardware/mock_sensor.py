@@ -24,8 +24,9 @@ class MockSensor():
     """
     Class for mocking any type of sensor
     @param sensor_type: the type of sensor
+    @param university: the university the sensor is located on
     @param campus: the campus the sensor is located on
-    @param buidling: the building the sensor is located in
+    @param building: the building the sensor is located in
     @param room: the room the sensor is located in
     @param mode: the mode of operation for the sensor
     @param sensor_read: a function that returns a value from the sensor
@@ -34,17 +35,16 @@ class MockSensor():
     # defining the api-endpoint
     API_ENDPOINT = "https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors"
 
-    def __init__(self, university: str, sensor_type: str, campus: str, buidling: str, room: str, mode: Mode, sensor_read: Callable[[], int]):
+    def __init__(self, university: str, sensor_type: str, campus: str, building: str, room: str, mode: Mode, sensor_read: Callable[[], int]):
         self.sensor_type = sensor_type
+        self.university = university
         self.campus = campus
-        self.building = buidling
+        self.building = building
         self.room = room
         self.mode = mode
         self.sensor_read = sensor_read
-        self.university = university
 
     # return a typical value from the sensor (depending on the mode)
-
     def read(self) -> int:
         return self.sensor_read()
 
