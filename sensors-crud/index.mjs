@@ -22,46 +22,54 @@ export const handler = async (event, context) => {
   if (event.resource.startsWith('/sensors')) {
     switch (event.httpMethod) {
       case 'GET':
+        let result;
         if (event.queryStringParameters) {
-          let location = decodeURIComponent(event.queryStringParameters.location) || 'none'
-          let campus = decodeURIComponent(event.queryStringParameters.campus) || 'none'
-          let type = decodeURIComponent(event.queryStringParameters.type) || 'none'
-          console.log("params", location, campus, type)
-          if (type == 'none' && campus == 'none' && location == 'none') {
-            responseCode = 400;
-            responseBody = {
-              msg: 'Bad request'
-            }
-            break;
-          }
+          let location = decodeURIComponent(event.queryStringParameters.location)
+          let campus = decodeURIComponent(event.queryStringParameters.campus)
+          let type = decodeURIComponent(event.queryStringParameters.type)
           const params = {
             TableName: tableName,
-            FilterExpression: '#ID = :ID and #campus = :campusval and #location = :locationval',
-            ExpressionAttributeNames: {
-              '#ID': 'ID',
-              '#campus': 'campus',
-              '#location': 'location',
-            },
-            ExpressionAttributeValues: {
-              ':ID': type,
-              ':campusval': campus,
-              ':locationval': location,
-            },
+            ExpressionAttributeNames: {},
+            ExpressionAttributeValues: {},
           };
-          const result = await dynamo.send(new ScanCommand(params));
-          console.log("result", result)
-          responseBody = {
-            "campus": campus,
-            "location": location,
-            "uniqueID": result.Items[0].identifier,
-            "timestamps": result.Items.map((item) => item.time),
-            "data": result.Items.map((item) => item.data)
+
+          let filterExpression = '';
+
+          if (location !== 'undefined') {
+            filterExpression += '#location = :locationval';
+            params.ExpressionAttributeNames['#location'] = 'location';
+            params.ExpressionAttributeValues[':locationval'] = location;
           }
-          break;
+
+          if (type !== 'undefined') {
+            if (filterExpression) {
+              filterExpression += ' and ';
+            }
+            filterExpression += '#ID = :ID';
+            params.ExpressionAttributeNames['#ID'] = 'ID';
+            params.ExpressionAttributeValues[':ID'] = type;
+          }
+
+          if (campus !== 'undefined') {
+            if (filterExpression) {
+              filterExpression += ' and ';
+            }
+            filterExpression += '#campus = :campusval';
+            params.ExpressionAttributeNames['#campus'] = 'campus';
+            params.ExpressionAttributeValues[':campusval'] = campus;
+          }
+
+          if (filterExpression) {
+            params.FilterExpression = filterExpression;
+          }
+
+          console.log("params", params)
+          result = await dynamo.send(new ScanCommand(params));
+        } else {
+          result = await dynamo.send(
+            new ScanCommand({ TableName: tableName })
+          );
         }
-        let result = await dynamo.send(
-          new ScanCommand({ TableName: tableName })
-        );
         let unique_identifiers = new Set(result.Items.map((item) => item.identifier))
         responseBody = {
           "sensors": [...unique_identifiers].map((identifier) => {
