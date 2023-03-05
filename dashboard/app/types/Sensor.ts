@@ -1,5 +1,3 @@
-import { ChartData } from "chart.js";
-
 export type Sensor = {
     campus: string;
     location: string;
