@@ -17,12 +17,11 @@ const String sensor_status[5] = {"Dangerous", "Bad", "Satisfactory", "Good", "Ex
 const String network_states[7] = {"Idle", "SSID Not Found", "Scan Complete", "Connected", "Failed", "Lost", "Disconnected"};
 
 // Network objects
-static WiFiClient client_;
-static HTTPClient http_;
-static IPAddress local_ip_;
+static WiFiClient client;
+static HTTPClient http;
 
 // Set display address, and display dimensions
-static LiquidCrystal_I2C display_(0x27, 20, 4);
+static LiquidCrystal_I2C display(0x27, 20, 4);
 
 static File sd_file_;
 
@@ -30,7 +29,6 @@ class SensorModule
 {
 public:
   SensorModule(String sensor_type, String display_name, String campus, String building, String room);
-
   void setValue(int value);
 
   /**
@@ -42,20 +40,13 @@ public:
    * @brief Send module data to the data server
    *        via HTTP/POST
    */
-  void processData();
+  void sendData();
 
   /**
-   * @brief   Open the SD card and start writting to a file
-   * @param   file_name The file to be accessed
-   * @returns The file to be accessed as a File object
+   * @brief Confirm if network is available and print
+   *        current network status to the LCD display
    */
-  File startSD(String file_name);
-
-  /**
-   * @brief (Re)Connect to the network specified under
-   *        network_info.h
-   */
-  void connectNetwork();
+  void displayNetworkStatus();
 
 private:
   String sensor_type_;
