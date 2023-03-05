@@ -23,7 +23,7 @@ The project allows for a high degree of scalability across universities of diffe
   <img src="https://user-images.githubusercontent.com/58626285/222949840-a8d25fbd-723b-4c42-961c-ab624364206f.png" width="100" height="100">
   <img src="https://user-images.githubusercontent.com/58626285/222949897-6e4e58b8-b1d9-47d5-9b2e-526a85794e57.png" width="100" height="100">
 </p>
-a
+
 ### Software Overview
 
 ![software_architecture](https://cdn.discordapp.com/attachments/760925116992585812/1081849623959851018/Screenshot_2023-03-05_at_08.04.01.png)
@@ -38,7 +38,7 @@ To avoid possible cybersecurity failures as well as reduce complexity, we used A
 
 We are firm believers in open source data and would prioritise the data dashboard being public for democratisation of data but also holding universities accountable to their _self assigned_ goals as well as international standards. 
 
-#### Scoring Algorithm
+#### *Scoring Algorithm*
 The algorithm measures how close our sensor reading is to the goal set by the user. It uses dynamic weightage based on how near the reading is to the goal set. If the reading is below the goal, we made it so that the actual distance (% difference) to the goal is multiplied by a decreasing weightage as the reading gets near the goal. The motivation behind this is essentially getting users to push closer towards their goal regardless of how far away they are at the moment - the actual increase in sustainability gives a bigger rise in the sustainability score when the gap between current readings and goal is wide.  
 
 On the other hand, if the readings are greater than the goal, the weightage applied increases as the reading gets further away from the goal. This penalty enforces the idea that values beyond the possible goal values indicate a less than desirable circumstance. For example, in the case of our CO2 sensors, values above 2000 indicate possible adverse health effects which should definitely be avoided. 
@@ -62,14 +62,14 @@ The current implementation supports measuring CO2 levels, generating a [VOC Inde
 
 ## SGD Innovation Goals:
 
-#### Innovation / Creativity:
+#### *Innovation / Creativity:*
 
 We make use of the current best and affordable tech. The specifics about the software and hardware have been mentioned above!
 
-#### Impact:
+#### *Impact:*
 Our idea and implementation can be picked up by any university but it is not necessarily limited to it. Since we monitor buildings themselves, anyone, anywhere can use our solution and check their sustainability score easily. Our hope is to push for a more sustainable city in general and we hope by being able to track scores (and filter by the different factors affecting it), we incentivise our users to strive for a more sustainable environment.
 
-#### Feasability:
+#### *Feasability:*
 
 We strived to make our solution as afforadable as possible, and with that in mind, provide a breakdown of potential costs below:
 - [ESP32 microcontroller](https://www.mouser.co.uk/ProductDetail/Espressif-Systems/ESP32-DevKitC-32E?qs=GedFDFLaBXFpgD0kAZWDrQ%3D%3D&mgh=1&vip=1&gclid=Cj0KCQiA9YugBhCZARIsAACXxeJ89AZzJ2C-8a7q3wvQzPK-0x3hb9HcdMbImyLcVQLG3rJoBKit30AaAl5vEALw_wcB) - £9.92 
@@ -79,10 +79,10 @@ We strived to make our solution as afforadable as possible, and with that in min
 - Our in-house smart meter (to measure energy consumption) - £50  
 - Total for a pack of each individual sensor: £91.38 (sensor pack)
 
-#### Additional Costs (estimates):
+#### *Additional Costs (estimates):*
 - setting up cost / building - £25
 - travel cost - £20 (based on current petrol prices and considering max travel distance to roughly 150km) (assuming 10.58km/L of tank can be travelled at 147.56 pence per litre)
 - AWS hosting cost - depends on user-base (ignoring in calculation)
 
 **Results**:   
-Assuming each building takes 4 sensor packs and there are 4 buildings on one campus, the total price for a campus would be £485.52 (4 * 4 * 91.48 + 4 * 25 + 20) - rounding up -> £1,600
+Assuming each building takes 4 sensor packs and there are 4 buildings on one campus, the total price for a campus would be £1,583.68 *(4 * 4 * 91.48 + 4 * 25 + 20)* - rounding up -> £1,600
