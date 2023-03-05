@@ -48,9 +48,9 @@ void SensorModule::sendData()
     http.addHeader("Content-Type", "application/json");
     String httpRequestData = "{\",\"key\":\"";
     httpRequestData += sensor_type_;
-    httpRequestData += "\",\"location\":\"";
+    httpRequestData += "\",\"campus\":\"";
     httpRequestData += campus_;
-    httpRequestData += "-";
+    httpRequestData += "\",\"location\":\"";
     httpRequestData += building_;
     httpRequestData += "-";
     httpRequestData += room_;
