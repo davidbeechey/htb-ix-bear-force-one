@@ -28,3 +28,30 @@ This project deploys several IoT microcontrollers to measure and collect data to
 This sensor can be customised and easily configured for use in the module prior to installation. An example of the module schematic can be found [here](https://github.com/davidbeechey/htb-ix-bear-force-one/blob/main/hardware/docs/Sensor%20Module%20Schematic.jpg). Once powered, the module maintains its internet connection and sends any gathered data to the internet for analysis. The LCD display allows users to observe the real time measurements from the sensor.
 
 The current implementation supports measuring CO2 levels, generating a [VOC Index](https://en.wikipedia.org/wiki/Volatile_organic_compound), measuring the quality of drinking water from water fountains, and monitoring power usage.
+
+## SGD Innovation Goals:
+
+#### Innovation / Creativity:
+
+We make use of the current best and affordable tech. The specifics about the software and hardware have been mentioned above!
+
+#### Impact:
+Our idea and implementation can be picked up by any university but it is not necessarily limited to it. Since we monitor buildings themselves, anyone, anywhere can use our solution and check their sustainability score easily. Our hope is to push for a more sustainable city in general and we hope by being able to track scores (and filter by the different factors affecting it), we incentivise our users to strive for a more sustainable environment.
+
+#### Feasability:
+
+We strived to make our solution as afforadable as possible, and with that in mind, provide a breakdown of potential costs below:
+- [ESP32 microcontroller](https://www.mouser.co.uk/ProductDetail/Espressif-Systems/ESP32-DevKitC-32E?qs=GedFDFLaBXFpgD0kAZWDrQ%3D%3D&mgh=1&vip=1&gclid=Cj0KCQiA9YugBhCZARIsAACXxeJ89AZzJ2C-8a7q3wvQzPK-0x3hb9HcdMbImyLcVQLG3rJoBKit30AaAl5vEALw_wcB) - £9.92 
+- [Youmile IIC/I2C/TWI Serial LCD Display](https://www.amazon.co.uk/Youmile-Serial-Display-Backlight-Arduino/dp/B099F2KPR4/ref=asc_df_B099F2KPR4/?tag=googshopuk-21&linkCode=df0&hvadid=534996565582&hvpos=&hvnetw=g&hvrand=6720465128582679622&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9046888&hvtargid=pla-1416553735824&psc=1) - £8.29 
+- [MG-11 CO2 sensor]( https://www.aliexpress.com/item/32859295115.html?spm=a2g0o.productlist.main.19.39a01927a36rqo&algo_pvid=08b62301-6c97-4dd5-b3d5-ac6210a5c745&algo_exp_id=08b62301-6c97-4dd5-b3d5-ac6210a5c745-9&pdp_ext_f=%7B%22sku_id%22%3A%2265339769524%22%7D&pdp_npi=3%40dis%21GBP%2127.91%2123.17%21%21%21%21%21%402100b5dc16779989712215429d06d7%2165339769524%21sea%21UK%210&curPageLogUid=R0w5ZzSfRu67
+) - £23.17
+- Our in-house smart meter (to measure energy consumption) - £50  
+- Total for a pack of each individual sensor: £91.38 (sensor pack)
+
+Additional Costs (estimates):
+- setting up cost / building - £25
+- travel cost - £20 (based on current petrol prices and considering max travel distance to roughly 150km) (assuming 10.58km/L of tank can be travelled at 147.56 pence per litre)
+- AWS hosting cost - depends on user-base (ignoring in calculation)
+
+**Results**:   
+Assuming each building takes 4 sensor packs and there are 4 buildings on one campus, the total price for a campus would be £485.52 (4*91.48 + 4 * 25 + 20) - rounding up -> £500
