@@ -1,7 +1,7 @@
 # HTB IX - Bear Force One
 ## **Bear-ly Sustainable**
 
-![flag](https://cdn.discordapp.com/attachments/1072492927047172146/1081543714901590057/flag.png)
+![flag](https://cdn.discordapp.com/attachments/1072492927047172146/1081844162955055174/flag.png)
 ![aws](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
 ![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
