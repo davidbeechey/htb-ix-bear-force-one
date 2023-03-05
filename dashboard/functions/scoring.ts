@@ -1,6 +1,3 @@
-const CO2SCORE_MIN = 400;
-const CO2SCORE_MAX = 5000;
-
 // generalized scoring function
 // returns a score between 0 and 1
 // tries to boost scores below the goal and penalize scores above the goal
@@ -11,7 +8,7 @@ export const scoreSensor = (reading: number, goal: number) => {
         if (delta_difference > 1) {
             return 1;
         }
-        dynamic_weight = 1 - delta_difference * 2.0;
+        dynamic_weight = 1 - delta_difference * 1.5;
         let score: number = dynamic_weight * (1 - delta_difference)
         if (score <= 0) {
             return 0;
