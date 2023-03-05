@@ -1,3 +1,4 @@
+import { CustomAccordion } from "@/components/Accordion";
 import axios from "axios";
 import Image from "next/image";
 import "./globals.css";
@@ -27,6 +28,9 @@ const LINKS = [
         href: "/water-quality",
         text: "Water Quality",
     },
+];
+
+const ADMIN_LINKS = [
     {
         href: "/admin",
         text: "Admin",
@@ -54,6 +58,26 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                                                 text={link.text}
                                             />
                                         ))}
+                                        <li className="pt-8">
+                                            <CustomAccordion
+                                                items={[
+                                                    {
+                                                        name: "Admin",
+                                                        content: (
+                                                            <div>
+                                                                {ADMIN_LINKS.map((link, index) => (
+                                                                    <NavLink
+                                                                        key={index}
+                                                                        href={link.href}
+                                                                        text={link.text}
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                        ),
+                                                    },
+                                                ]}
+                                            />
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>
