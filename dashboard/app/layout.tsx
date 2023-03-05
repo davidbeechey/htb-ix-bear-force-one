@@ -26,6 +26,10 @@ const LINKS = [
         href: "/water-quality",
         text: "Water Quality",
     },
+    {
+        href: "/admin",
+        text: "Admin"
+    }
 ];
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
