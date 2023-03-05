@@ -17,7 +17,7 @@ The project allows for a high degree of scalability across universities of diffe
 ### Software Overview
 
 ### Hardware Overview
-![draw.io_summary]()
+![draw.io_summary](https://cdn.discordapp.com/attachments/1072492927047172146/1081838317726875698/HardwareSummary.png)
 
 This project deploys several IoT microcontrollers to measure and collect data to be served online. All modules share a common design of:
 
