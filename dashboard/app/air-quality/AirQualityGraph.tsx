@@ -2,19 +2,19 @@
 
 import { Card } from "@/components";
 import { getGradient, LineGraph } from "@/components/LineGraph";
-import { ChartDataset } from "chart.js";
+import { ChartDataset, ChartData } from "chart.js";
 import { Sensor } from "../types";
 
-interface SensorGraphProps {
+interface AirQualityGraphProps {
     sensor: Sensor;
 }
 
-export default function SensorGraph({ sensor }: SensorGraphProps) {
-    const data = {
-        ...sensor.data,
-        datasets: sensor.data.datasets.map((dataset) => {
+export default function AirQualityGraph({ sensor }: AirQualityGraphProps) {
+    const data: ChartData<"line", number[], string> = {
+        labels: sensor.timestamps.map((timestamp) => new Date(timestamp).toLocaleTimeString()),
+        datasets: sensor.data.map((dataset) => {
             return {
-                ...dataset,
+                data: sensor.data,
                 borderColor: function (context) {
                     const chart = context.chart;
                     const { ctx, chartArea } = chart;
@@ -34,7 +34,8 @@ export default function SensorGraph({ sensor }: SensorGraphProps) {
     return (
         <Card className="space-y-6">
             <div>
-                <h1 className="text-xl font-bold">{sensor.location}</h1>
+                <h1 className="text-xl font-bold">{sensor.campus}</h1>
+                <p>{sensor.location}</p>
             </div>
             <LineGraph data={data} />
         </Card>

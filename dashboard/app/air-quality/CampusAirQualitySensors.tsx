@@ -1,9 +1,9 @@
 "use client";
 
 import { Sensor } from "../types";
-import SensorGraph from "./SensorGraph";
+import SensorGraph from "./AirQualityGraph";
 
-export default function AllSensors({ sensors }: { sensors: Sensor[] }) {
+export default function CampusAirQualitySensors({ sensors }: { sensors: Sensor[] }) {
     return (
         <div className="grid grid-cols-3 w-full gap-4">
             {sensors.map((sensor) => (

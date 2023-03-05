@@ -1,56 +1,23 @@
 import { Card } from "@/components";
-import { getCo2SensorData } from "@/sensors/co2_sensor";
-import { ChartData } from "chart.js";
+import axios from "axios";
 import { Sensor } from "../types";
-import AllSensors from "./AllSensors";
-import SensorGraph from "./SensorGraph";
+import CampusAirQualitySensors from "./CampusAirQualitySensors";
+import SensorGraph from "./AirQualityGraph";
 
-async function getAirQualitySensors() {
-    const data = await getCo2SensorData();
-    console.log(data);
+const BASE_URL = "https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors";
 
-    const tempData: ChartData<"line", number[], string> = {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [
-            {
-                label: "# of Votes",
-                data: [12, 40, 3, 5, 2, 3],
-            },
-        ],
-    };
+async function getAirQuality() {
+    const data = await axios.get(BASE_URL + "?type=co2_mock").then((res) => res.data);
 
-    const temp: Sensor[] = [
-        {
-            location: "Test Location 1",
-            data: tempData,
-        },
-        {
-            location: "Test Location 2",
-            data: tempData,
-        },
-        {
-            location: "Test Location 3",
-            data: tempData,
-        },
-        {
-            location: "Test Location 4",
-            data: tempData,
-        },
-        {
-            location: "Test Location 5",
-            data: tempData,
-        },
-        {
-            location: "Test Location 6",
-            data: tempData,
-        },
-    ];
+    const sensors: Sensor[] = data.sensors || [];
 
-    return temp;
+    return sensors;
 }
 
 export default async function AirQuality() {
-    const sensors = await getAirQualitySensors();
+    const sensors = await getAirQuality();
+
+    const averageAirQuality = sensors[0];
 
     return (
         <div className="space-y-4">
@@ -58,14 +25,14 @@ export default async function AirQuality() {
                 <Card>
                     <h1 className="text-3xl">All Sensors</h1>
                 </Card>
-                {/* TODO: temp sensor */}
-                <SensorGraph sensor={sensors[0]} />
+                {/* TODO: temp sensor - replace with average */}
+                <SensorGraph sensor={averageAirQuality} />
             </div>
             <div className="space-y-4">
                 <Card>
                     <h1 className="text-3xl">All Sensors</h1>
                 </Card>
-                <AllSensors sensors={sensors} />
+                <CampusAirQualitySensors sensors={sensors} />
             </div>
         </div>
     );
