@@ -4,6 +4,7 @@ import { Sensor } from "../../types";
 import axios from "axios";
 import AirQualityGraph from "./AirQualityGraph";
 import Link from "next/link";
+import { averageFromSensors } from "@/functions/averageAirQuality";
 
 async function getAirQuality(university: string) {
     const sensorsData = await axios
@@ -39,7 +40,10 @@ export default async function AirQuality({ params }: { params: { university: str
     if (sensors.length === 0) return <div>No sensors found</div>;
 
     // TODO: temp, to be replaced with Ishan's function for averaging sensors
+    // const averageAirQuality = averageFromSensors(sensors);
     const averageAirQuality = sensors[0];
+
+    if (!averageAirQuality) return <div>No sensors found</div>;
 
     return (
         <div className="space-y-4">
@@ -53,8 +57,10 @@ export default async function AirQuality({ params }: { params: { university: str
             </div>
             <div className="grid grid-cols-2 gap-4">
                 {campuses.map((campus) => {
-                    // TODO: temp, to be replaced with Ishan's function for averaging sensors
-                    const averageSensor = sensors.find((sensor) => sensor.campus === campus);
+                    // const averageSensor = averageFromSensors(
+                    //     sensors.filter((sensor) => sensor.campus === campus)
+                    // );
+                    const averageSensor = sensors.filter((sensor) => sensor.campus == campus)[0];
                     if (!averageSensor) return null;
                     return (
                         <Link href={`/${params.university}/air-quality/${campus}`}>

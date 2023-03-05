@@ -4,6 +4,11 @@ import Image from "next/image";
 import { NavLink } from "./NavLink";
 import axios from "axios";
 
+export const metadata = {
+    title: "Bearly Sustainable",
+    description: "",
+};
+
 async function getUniversities() {
     const res = await axios
         .get("https://nbmgmb9465.execute-api.eu-west-1.amazonaws.com/DEV/university")
@@ -30,6 +35,9 @@ export default async function Layout({ children }: { children: React.ReactNode }
                                             text={university}
                                         />
                                     ))}
+                                    <li>
+                                        <NavLink href="/api/auth/login" text="Login" />
+                                    </li>
                                 </ul>
                             </div>
                         </header>

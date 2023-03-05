@@ -42,7 +42,7 @@ export default function AirQualityGraph({
     };
 
     return (
-        <Card className="space-y-6" hover={hover}>
+        <Card className="space-y-6 w-full" hover={hover}>
             <div>
                 <h1 className="text-xl font-bold">{title}</h1>
                 <p>{subtitle}</p>

@@ -2,6 +2,7 @@ import { Sensor } from "../../types";
 import axios from "axios";
 import WaterQuality from "./WaterQuality";
 import Link from "next/link";
+import { averageFromSensors } from "@/functions/averageAirQuality";
 
 async function getAirQuality(university: string) {
     const sensorsData = await axios
@@ -36,11 +37,16 @@ export default async function AirQuality({ params }: { params: { university: str
 
     if (sensors.length === 0) return <div>No sensors found</div>;
 
+    // const average = averageFromSensors(sensors);
+    const average = sensors[0];
+
+    if (!average) return <div>No sensors found</div>;
+
     return (
         <div className="space-y-4">
             <div className="space-y-4">
                 <WaterQuality
-                    value={sensors[0].data[sensors[0].data.length - 1]}
+                    value={average.data[sensors[0].data.length - 1]}
                     title="Average Water Quality"
                     subtitle="Across all sensors"
                 />

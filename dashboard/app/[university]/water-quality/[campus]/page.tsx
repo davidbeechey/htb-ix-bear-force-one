@@ -1,5 +1,6 @@
 import { Sensor } from "@/app/types";
 import { Card } from "@/components";
+import { averageFromSensors } from "@/functions/averageAirQuality";
 import axios from "axios";
 import Link from "next/link";
 import AirQualityGraph from "../WaterQuality";
@@ -27,8 +28,10 @@ export default async function AirQuality({
 
     if (sensors.length === 0) return <div>No sensors found</div>;
 
-    // TODO: temp, to be replaced with Ishan's function for averaging sensors
+    // const averageWaterQuality = averageFromSensors(sensors);
     const averageWaterQuality = sensors[0];
+
+    if (!averageWaterQuality) return <div>No sensors found</div>;
 
     return (
         <div className="space-y-4">
