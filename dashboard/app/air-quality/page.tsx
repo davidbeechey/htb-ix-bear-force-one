@@ -1,7 +1,7 @@
 import { Card } from "@/components";
-import axios from "axios";
-import Link from "next/link";
+import { ChartData } from "chart.js";
 import { Sensor } from "../types";
+import axios from "axios";
 import AirQualityGraph from "./AirQualityGraph";
 
 async function getAirQuality() {
