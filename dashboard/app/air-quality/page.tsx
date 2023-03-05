@@ -3,6 +3,7 @@ import { ChartData } from "chart.js";
 import { Sensor } from "../types";
 import axios from "axios";
 import AirQualityGraph from "./AirQualityGraph";
+import Link from "next/link";
 
 async function getAirQuality() {
     const sensorsData = await axios
