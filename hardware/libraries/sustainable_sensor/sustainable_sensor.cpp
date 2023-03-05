@@ -10,7 +10,18 @@ SensorModule::SensorModule(String sensor_type, String display_name, String campu
 
   // Connect to local network
   int network_state = WiFi.begin(SSID, PASSWORD);
-
+  if (DEBUG_FLAG)
+  {
+    if (network_state == WL_CONNECTED)
+    {
+      Serial.println("Network connection established!");
+    }
+    else
+    {
+      Serial.print("Network connection failed. Code: ");
+      Serial.println(network_states[network_state]);
+    }
+  }
   display.init();
   display.backlight();
 
@@ -36,10 +47,16 @@ void SensorModule::displayValues(String message)
   display.print(sensor_value_);
   display.setCursor(8, 2);
   display.print(message);
+  if (DEBUG_FLAG)
+  {
+    Serial.print(display_name_);
+    Serial.println(sensor_value_);
+    Serial.print("Status: ");
+    Serial.println(message);
+  }
   return;
 }
 
-// TODOLater: Make this string concatenation better
 void SensorModule::sendData()
 {
   if (WiFi.status() == WL_CONNECTED && client.connected())
@@ -57,13 +74,20 @@ void SensorModule::sendData()
     httpRequestData += "\",\"data\":\"";
     httpRequestData += sensor_value_;
     httpRequestData == "\"}";
-    // int http_code = http.POST("{\"api_key\":\"" + API_KEY + "\",\"sensor\":\"" + sensor_type_ + "\",\"value1\":\"24.25\",\"value2\":\"49.54\",\"value3\":\"1005.14\"}");
     int http_code = http.POST(httpRequestData);
     if (DEBUG_FLAG)
     {
       Serial.println("HTTP POST Result: " + http_code);
     }
     http.end();
+  }
+  else
+  {
+    if (DEBUG_FLAG)
+    {
+      Serial.print("Post unsuccessful. Network Status: ");
+      Serial.println(network_states[WiFi.status()]);
+    }
   }
   return;
 }
@@ -73,7 +97,6 @@ void SensorModule::displayNetworkStatus()
   int network_state = WiFi.status();
   if (DEBUG_FLAG)
   {
-    Serial.print("Network error!");
     Serial.print("Current network state code: ");
     Serial.println(network_state);
   }
