@@ -11,6 +11,14 @@ export const metadata = {
     description: "",
 };
 
+async function getUniversities() {
+    const res = await axios
+        .get("https://nbmgmb9465.execute-api.eu-west-1.amazonaws.com/DEV/university")
+        .then((res) => res.data.universities)
+        .catch((err) => console.log(err));
+    return res.Items.map((item: any) => item.university);
+}
+
 const LINKS = [
     {
         href: "/",
@@ -45,7 +53,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     <main>
                         <header className="bg-gray-900 p-8 flex gap-4">
                             <Image src="/bear.png" alt="bear" width="50" height="50" />
-                            <h1 className="text-3xl font-light">Bearly Sustainable</h1>
+                            <h1 className="text-3xl font-light">BearlySustainable</h1>
+                            <div className="flex overflow-x-auto">
+                                <ul className="flex space-x-4 whitespace-nowrap">
+                                    {
+                                        (await getUniversities()).map((university: string) => (
+                                            <NavLink key={university} href={`/university/${university}`} text={university} />
+                                        ))
+                                    }
+                                </ul>
+                            </div>
                         </header>
                         <div className="flex m-8 gap-8">
                             <div className="basis-1/5">
