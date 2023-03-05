@@ -4,7 +4,7 @@ import { Card } from "@/components";
 import { LineGraph } from "@/components/LineGraph";
 import { ChartDataset, ChartData, ChartArea } from "chart.js";
 
-interface AirQualityGraphProps {
+interface EnergyConsumptionGraphProps {
     title: string;
     subtitle: string;
     data: number[];
@@ -12,13 +12,13 @@ interface AirQualityGraphProps {
     hover?: boolean;
 }
 
-export default function AirQualityGraph({
+export default function EnergyConsumptionGraph({
     title,
     subtitle,
     data,
     timestamps,
     hover = false,
-}: AirQualityGraphProps) {
+}: EnergyConsumptionGraphProps) {
     const graphData: ChartData<"line", number[], string> = {
         labels: timestamps.map((timestamp) => new Date(timestamp).toLocaleTimeString()),
         datasets: [
