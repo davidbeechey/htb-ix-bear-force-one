@@ -64,7 +64,7 @@ This sensor can be customised and easily configured for use in the module prior 
 
 The current implementation supports measuring CO2 levels, generating a [VOC Index](https://en.wikipedia.org/wiki/Volatile_organic_compound), [measuring the quality of drinking water](https://en.wikipedia.org/wiki/Total_dissolved_solids) from water fountains, and monitoring power usage. However, as stated before, code for any additional type of sensor can be implemented with ease.
 
-![image](https://github.com/davidbeechey/htb-ix-bear-force-one/blob/main/hardware/docs/Sensor%20Module%20Schematic.jpg)
+![schematic](https://raw.githubusercontent.com/davidbeechey/htb-ix-bear-force-one/main/hardware/docs/Sensor%20Module%20Schematic.jpg)
 
 ## SGD Innovation Goals:
 
