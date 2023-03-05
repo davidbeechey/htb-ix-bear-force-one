@@ -10,14 +10,21 @@ SensorModule::SensorModule(String sensor_type, String display_name, String campu
 
   // Connect to local network
   int network_state = WiFi.begin(SSID, PASSWORD);
-  if (DEBUG_FLAG)
+  if (SD.begin(SD_PIN))
   {
+    sd_file_ = SD.open(LOGS_FILE, FILE_WRITE);
+    sd_file_.print(millis());
+    sd_file_.print(": ");
     if (network_state == WL_CONNECTED)
     {
+      sd_file_.println("Network connection established!");
       Serial.println("Network connection established!");
     }
     else
     {
+      sd_file_.print("Network connection failed. Code: ");
+      sd_file_.println(network_states[network_state]);
+      sd_file_.close();
       Serial.print("Network connection failed. Code: ");
       Serial.println(network_states[network_state]);
     }
@@ -85,9 +92,25 @@ void SensorModule::sendData()
   {
     if (DEBUG_FLAG)
     {
+      if (SD.begin(SD_PIN))
+      {
+        sd_file_ = SD.open(LOGS_FILE, FILE_WRITE);
+        sd_file_.print(millis());
+        sd_file_.print(": ");
+        sd_file_.print("Post unsuccessful. Network Status: ");
+        sd_file_.println(network_states[WiFi.status()]);
+        sd_file_.close();
+      }
+
       Serial.print("Post unsuccessful. Network Status: ");
       Serial.println(network_states[WiFi.status()]);
     }
+  }
+  if (SD.begin(SD_PIN))
+  {
+    sd_file_ = SD.open(RESULTS_FILE, FILE_WRITE);
+    sd_file_.println(sensor_value_);
+    sd_file_.close();
   }
   return;
 }
@@ -97,6 +120,15 @@ void SensorModule::displayNetworkStatus()
   int network_state = WiFi.status();
   if (DEBUG_FLAG)
   {
+    if (SD.begin(SD_PIN))
+    {
+      sd_file_ = SD.open(LOGS_FILE, FILE_WRITE);
+      sd_file_.print(millis());
+      sd_file_.print(": ");
+      sd_file_.print("Current network state code: ");
+      sd_file_.println(network_state);
+      sd_file_.close();
+    }
     Serial.print("Current network state code: ");
     Serial.println(network_state);
   }

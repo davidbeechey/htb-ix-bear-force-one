@@ -4,6 +4,8 @@ This code is designed for use with the following board:
 The following libraries are required to run this code for any sensor:
 - Arduino_JSON/Arduino_JSON.h
 - LiquidCrystal_I2C/LiquidCrystal_I2C.h
+- SD.h
+- SPI.h
 - WiFi_Link/WiFi.h
 - HTTPClient/HTTPClient.h
 

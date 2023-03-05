@@ -1,12 +1,17 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <SPI.h>
+#include <SD.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <network_info.h>
 
 #define DEBUG_FLAG false
 
-#define WARNING_BUZZER 13
+#define WARNING_BUZZER 5
+#define SD_PIN 10
+#define LOGS_FILE "logs.txt"
+#define RESULTS_FILE "results.txt"
 
 const String sensor_status[5] = {"Dangerous", "Bad", "Satisfactory", "Good", "Excellent"};
 const String network_states[7] = {"Idle", "SSID Not Found", "Scan Complete", "Connected", "Failed", "Lost", "Disconnected"};
@@ -17,6 +22,8 @@ static HTTPClient http;
 
 // Set display address, and display dimensions
 static LiquidCrystal_I2C display(0x27, 20, 4);
+
+static File sd_file_;
 
 class SensorModule
 {
