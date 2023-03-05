@@ -23,8 +23,7 @@ The project allows for a high degree of scalability across universities of diffe
   <img src="https://user-images.githubusercontent.com/58626285/222949840-a8d25fbd-723b-4c42-961c-ab624364206f.png" width="100" height="100">
   <img src="https://user-images.githubusercontent.com/58626285/222949897-6e4e58b8-b1d9-47d5-9b2e-526a85794e57.png" width="100" height="100">
 </p>
-
-
+a
 ### Software Overview
 
 ![software_architecture](https://cdn.discordapp.com/attachments/760925116992585812/1081849623959851018/Screenshot_2023-03-05_at_08.04.01.png)
@@ -37,10 +36,14 @@ Our frontend is powered by Next.js as well as Tailwind CSS and deployed by Verce
 
 To avoid possible cybersecurity failures as well as reduce complexity, we used Auth0 as our authentication and authorisation platforms. We used Auth0 to implement login, registering and authorisation middleware. This also allows out platform to scale with relative ease when a potential user growth spike occurs. 
 
-We are firm believers in open source data and would prioritise the data dashboard being public for democratisation of data but also holding universities accountable to their _self assigned_ goals as well as international standards.   
+We are firm believers in open source data and would prioritise the data dashboard being public for democratisation of data but also holding universities accountable to their _self assigned_ goals as well as international standards. 
 
 #### Scoring Algorithm
 The algorithm measures how close our sensor reading is to the goal set by the user. It uses dynamic weightage based on how near the reading is to the goal set. If the reading is below the goal, we made it so that the actual distance (% difference) to the goal is multiplied by a decreasing weightage as the reading gets near the goal. The motivation behind this is essentially getting users to push closer towards their goal regardless of how far away they are at the moment - the actual increase in sustainability gives a bigger rise in the sustainability score when the gap between current readings and goal is wide.  
+
+On the other hand, if the readings are greater than the goal, the weightage applied increases as the reading gets further away from the goal. This penalty enforces the idea that values beyond the possible goal values indicate a less than desirable circumstance. For example, in the case of our CO2 sensors, values above 2000 indicate possible adverse health effects which should definitely be avoided. 
+
+For the overall sustainable score, we simply average scores across all sensors for an organization. 
 
 ### Hardware Overview
 ![draw.io_summary](https://cdn.discordapp.com/attachments/1072492927047172146/1081838317726875698/HardwareSummary.png)
