@@ -7,12 +7,21 @@ SensorModule::SensorModule(String sensor_type, String display_name, String campu
   campus_ = campus;
   building_ = building;
   room_ = room;
-  int network_status;
-  bool data_server_status;
 
   // Connect to local network
-  network_status = WiFi.begin(SSID, PASSWORD);
-
+  int network_state = WiFi.begin(SSID, PASSWORD);
+  if (DEBUG_FLAG)
+  {
+    if (network_state == WL_CONNECTED)
+    {
+      Serial.println("Network connection established!");
+    }
+    else
+    {
+      Serial.print("Network connection failed. Code: ");
+      Serial.println(network_states[network_state]);
+    }
+  }
   display.init();
   display.backlight();
 
@@ -38,10 +47,16 @@ void SensorModule::displayValues(String message)
   display.print(sensor_value_);
   display.setCursor(8, 2);
   display.print(message);
+  if (DEBUG_FLAG)
+  {
+    Serial.print(display_name_);
+    Serial.println(sensor_value_);
+    Serial.print("Status: ");
+    Serial.println(message);
+  }
   return;
 }
 
-// TODOLater: Make this string concatenation better
 void SensorModule::sendData()
 {
   if (WiFi.status() == WL_CONNECTED && client.connected())
@@ -50,16 +65,15 @@ void SensorModule::sendData()
     http.addHeader("Content-Type", "application/json");
     String httpRequestData = "{\",\"key\":\"";
     httpRequestData += sensor_type_;
-    httpRequestData += "\",\"location\":\"";
+    httpRequestData += "\",\"campus\":\"";
     httpRequestData += campus_;
-    httpRequestData += "-";
+    httpRequestData += "\",\"location\":\"";
     httpRequestData += building_;
     httpRequestData += "-";
     httpRequestData += room_;
     httpRequestData += "\",\"data\":\"";
     httpRequestData += sensor_value_;
     httpRequestData == "\"}";
-    // int http_code = http.POST("{\"api_key\":\"" + API_KEY + "\",\"sensor\":\"" + sensor_type_ + "\",\"value1\":\"24.25\",\"value2\":\"49.54\",\"value3\":\"1005.14\"}");
     int http_code = http.POST(httpRequestData);
     if (DEBUG_FLAG)
     {
@@ -69,13 +83,32 @@ void SensorModule::sendData()
   }
   else
   {
-    networkConnect();
+    if (DEBUG_FLAG)
+    {
+      Serial.print("Post unsuccessful. Network Status: ");
+      Serial.println(network_states[WiFi.status()]);
+    }
   }
   return;
 }
 
-void SensorModule::networkConnect()
+void SensorModule::displayNetworkStatus()
 {
-  // TODOLater: Implement
+  int network_state = WiFi.status();
+  if (DEBUG_FLAG)
+  {
+    Serial.print("Current network state code: ");
+    Serial.println(network_state);
+  }
+  display.setCursor(5, 3);
+  if (network_state != WL_NO_SHIELD)
+  {
+    display.print(network_states[network_state]);
+  }
+  if (network_state != WL_CONNECTED)
+  {
+    WiFi.disconnect();
+    network_state = WiFi.begin(SSID, PASSWORD);
+  }
   return;
 }

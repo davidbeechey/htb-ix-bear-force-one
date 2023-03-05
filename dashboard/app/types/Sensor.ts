@@ -1,6 +1,9 @@
 import { ChartData } from "chart.js";
 
 export type Sensor = {
-    location: string | null;
-    data: ChartData<"line", number[], string>;
+    campus: string;
+    location: string;
+    uniqueID: string;
+    timestamps: Date[];
+    data: number[];
 };

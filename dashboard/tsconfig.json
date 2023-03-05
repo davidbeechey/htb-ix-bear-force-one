@@ -33,8 +33,11 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "app/Providers.js"  ],
+    ".next/types/**/*.ts",
+    "app/Providers.js",
+    ".next/types/**/*.ts",
+    "sensors/co2_sensor.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

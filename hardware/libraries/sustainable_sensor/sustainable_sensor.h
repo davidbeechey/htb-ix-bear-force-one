@@ -8,10 +8,10 @@
 
 #define WARNING_BUZZER 13
 
-const String sensor_status[5] = {"Dangerous", "Unhealthy", "Not ideal", "Good", "Excellent"};
-const String network_status[3] = {"Connected", "Disconnected", "Failed"};
+const String sensor_status[5] = {"Dangerous", "Bad", "Satisfactory", "Good", "Excellent"};
+const String network_states[7] = {"Idle", "SSID Not Found", "Scan Complete", "Connected", "Failed", "Lost", "Disconnected"};
 
-// Network constants and objects
+// Network objects
 static WiFiClient client;
 static HTTPClient http;
 
@@ -22,10 +22,24 @@ class SensorModule
 {
 public:
   SensorModule(String sensor_type, String display_name, String campus, String building, String room);
-  void displayValues(String message);
   void setValue(int value);
+
+  /**
+   * @brief Print module info to the LCD display
+   */
+  void displayValues(String message);
+
+  /**
+   * @brief Send module data to the data server
+   *        via HTTP/POST
+   */
   void sendData();
-  void networkConnect();
+
+  /**
+   * @brief Confirm if network is available and print
+   *        current network status to the LCD display
+   */
+  void displayNetworkStatus();
 
 private:
   String sensor_type_;

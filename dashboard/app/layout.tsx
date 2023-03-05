@@ -1,6 +1,8 @@
+import axios from "axios";
 import "./globals.css";
 import { NavLink } from "./NavLink";
 import Providers from "./Providers";
+import { Sensor } from "./types";
 
 export const metadata = {
     title: "Sustainability Management System",
@@ -26,7 +28,7 @@ const LINKS = [
     },
 ];
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
             <Providers>
