@@ -2,13 +2,13 @@
 
 #include <sustainable_sensor.h>
 
-#define TDS_AIN A0
-#define VREF 5.0              // analog reference voltage(Volt) of the ADC
-#define SCOUNT  30            // sum of sample point
-
 #define CAMPUS "CENTRAL"
 #define BUILDING "40GS"
 #define ROOM "LTC"
+
+#define TDS_AIN A0
+#define VREF 5.0              // analog reference voltage(Volt) of the ADC
+#define SCOUNT  30            // sum of sample point
 
 // Define TDS Index values
 #define TDS_TOO_HIGH 400
@@ -33,14 +33,12 @@ void setup(){
   if (DEBUG_FLAG)
   {
     Serial.begin(9600);
-    if(SD.begin(SD_PIN)){
-      sd_file_ = SD.open(LOGS_FILE, FILE_WRITE);
-      sd_file_.print(millis());
-      sd_file_.print(": ");
+    Serial.println("Debug begin");
+    sd_file_ = tds.startSD(LOGS_FILE);
+    if(sd_file_){
       sd_file_.println("Debug begin.");
       sd_file_.close();
     }
-    Serial.println("Debug open");
   }
   pinMode(TDS_AIN,INPUT);
 }
@@ -73,8 +71,10 @@ void loop(){
     i = 4;
   }
   tds.displayValues(sensor_status[i]);
-  tds.sendData();
-  tds.displayNetworkStatus();
+  if(WiFi.status() != WL_CONNECTED){
+    tds.connectNetwork();
+  }
+  tds.processData();
   delay(1000);
 }
 
