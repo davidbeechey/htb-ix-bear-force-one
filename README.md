@@ -48,10 +48,20 @@ We strived to make our solution as afforadable as possible, and with that in min
 - Our in-house smart meter (to measure energy consumption) - £50  
 - Total for a pack of each individual sensor: £91.38 (sensor pack)
 
-Additional Costs (estimates):
+#### Additional Costs (estimates):
 - setting up cost / building - £25
 - travel cost - £20 (based on current petrol prices and considering max travel distance to roughly 150km) (assuming 10.58km/L of tank can be travelled at 147.56 pence per litre)
 - AWS hosting cost - depends on user-base (ignoring in calculation)
 
 **Results**:   
 Assuming each building takes 4 sensor packs and there are 4 buildings on one campus, the total price for a campus would be £485.52 (4 * 4 * 91.48 + 4 * 25 + 20) - rounding up -> £1,600
+
+<p align="center">
+  <strong style=”font-size: 150%;”>Our Focuses:</strong> 
+</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/58626285/222949829-eebf8624-2294-474c-bfe3-ac87cc1ffa42.png" width="100" height="100">
+  <img src="https://user-images.githubusercontent.com/58626285/222949840-a8d25fbd-723b-4c42-961c-ab624364206f.png" width="100" height="100">
+  <img src="https://user-images.githubusercontent.com/58626285/222949897-6e4e58b8-b1d9-47d5-9b2e-526a85794e57.png" width="100" height="100">
+</p>
