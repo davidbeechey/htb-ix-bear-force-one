@@ -8,9 +8,8 @@
 
 #define WARNING_BUZZER 13
 
-const String sensor_status[5] = {"Dangerous", "Unhealthy", "Not ideal", "Good", "Excellent"};
+const String sensor_status[5] = {"Dangerous", "Bad", "Satisfactory", "Good", "Excellent"};
 const String network_states[7] = {"Idle", "SSID Not Found", "Scan Complete", "Connected", "Failed", "Lost", "Disconnected"};
-// int net_state;
 
 // Network constants and objects
 static WiFiClient client;
