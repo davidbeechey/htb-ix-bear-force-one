@@ -18,22 +18,15 @@ export default function WaterQuality({ title, subtitle, value, hover = false }: 
                 <h1 className="text-xl font-bold">{title}</h1>
                 <p>{subtitle}</p>
             </div>
-            <div
-                className="wrapper"
-                role="progressbar"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={value}
-            >
-                <div className="barContainer">
-                    <div className="filler" style={{ width: `${value}%` }}>
-                        <div
-                            className="fillerBackground"
-                            style={{ width: `${fillerRelativePercentage}%` }}
-                        />
-                    </div>
-                </div>
-                <div className="textValue">{`${value}%`}</div>
+            <div className="relative w-full h-4 bg-blue-500 rounded-full">
+                <div
+                    className="absolute top-0 left-0 h-full bg-red-500 rounded-full"
+                    style={{ width: `${fillerRelativePercentage}%` }}
+                ></div>
+            </div>
+            <div className="flex justify-between">
+                <p className="text-gray-500">0</p>
+                <p className="text-gray-500">{value}</p>
             </div>
         </Card>
     );
