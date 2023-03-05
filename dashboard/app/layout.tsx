@@ -58,7 +58,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                                 <ul className="flex space-x-4 whitespace-nowrap">
                                     {
                                         (await getUniversities()).map((university: string) => (
-                                            <NavLink key={university} href={`/university/${university}`} text={university} />
+                                            <NavLink key={university} href={`/${university}`} text={university} />
                                         ))
                                     }
                                 </ul>

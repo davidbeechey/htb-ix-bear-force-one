@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sensor } from "../types";
+import { Sensor } from "../../types";
 
 export default function HeatMap({ sensors, campuses }: { sensors: Sensor[]; campuses: string[] }) {
     return (
