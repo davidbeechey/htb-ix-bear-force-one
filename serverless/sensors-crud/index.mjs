@@ -27,6 +27,7 @@ export const handler = async (event, context) => {
           let location = decodeURIComponent(event.queryStringParameters.location)
           let campus = decodeURIComponent(event.queryStringParameters.campus)
           let type = decodeURIComponent(event.queryStringParameters.type)
+          let university = decodeURIComponent(event.queryStringParameters.university)
           const params = {
             TableName: tableName,
             ExpressionAttributeNames: {},
@@ -59,6 +60,15 @@ export const handler = async (event, context) => {
             params.ExpressionAttributeValues[':campusval'] = campus;
           }
 
+          if (university !== 'undefined') {
+            if (filterExpression) {
+              filterExpression += ' and ';
+            }
+            filterExpression += '#university = :university';
+            params.ExpressionAttributeNames['#university'] = 'university';
+            params.ExpressionAttributeValues[':university'] = university;
+          }
+
           if (filterExpression) {
             params.FilterExpression = filterExpression;
           }
@@ -78,6 +88,7 @@ export const handler = async (event, context) => {
               "campus": filtered[0].campus,
               "location": filtered[0].location,
               "uniqueID": filtered[0].identifier,
+              "university": filtered[0].university,
               "timestamps": filtered.map((item) => item.time),
               "data": filtered.map((item) => item.data)
             }
@@ -103,6 +114,7 @@ export const handler = async (event, context) => {
               campus: eventBody.campus,
               location: eventBody.location,
               data: eventBody.data,
+              university: eventBody.university,
               time: new Date().toISOString()
             },
           })
