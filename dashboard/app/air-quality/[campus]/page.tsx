@@ -36,12 +36,7 @@ export default async function AirQuality({ params }: { params: { campus: string 
                     subtitle={`Across campus: ${params.campus}`}
                 />
             </div>
-            <div className="space-y-4">
-                <Card>
-                    <h1 className="text-3xl">All Sensors</h1>
-                </Card>
-                <SensorsGrid sensors={sensors} />
-            </div>
+            <SensorsGrid sensors={sensors} />
         </div>
     );
 }

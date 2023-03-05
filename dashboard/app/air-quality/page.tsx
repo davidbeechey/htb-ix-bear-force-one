@@ -46,28 +46,23 @@ export default async function AirQuality() {
                     timestamps={averageAirQuality.timestamps}
                 />
             </div>
-            <div className="space-y-4">
-                <Card>
-                    <h1 className="text-3xl">All Sensors</h1>
-                </Card>
-                <div className="grid grid-cols-2 gap-4">
-                    {campuses.map((campus) => {
-                        // TODO: temp, to be replaced with Ishan's function for averaging sensors
-                        const averageSensor = sensors.find((sensor) => sensor.campus === campus);
-                        if (!averageSensor) return null;
-                        return (
-                            <Link href={`/air-quality/${campus}`}>
-                                <AirQualityGraph
-                                    data={averageSensor.data}
-                                    title={campus}
-                                    subtitle="Average Air Quality"
-                                    timestamps={averageSensor.timestamps}
-                                    hover
-                                />
-                            </Link>
-                        );
-                    })}
-                </div>
+            <div className="grid grid-cols-2 gap-4">
+                {campuses.map((campus) => {
+                    // TODO: temp, to be replaced with Ishan's function for averaging sensors
+                    const averageSensor = sensors.find((sensor) => sensor.campus === campus);
+                    if (!averageSensor) return null;
+                    return (
+                        <Link href={`/air-quality/${campus}`}>
+                            <AirQualityGraph
+                                data={averageSensor.data}
+                                title={campus}
+                                subtitle="Average Air Quality"
+                                timestamps={averageSensor.timestamps}
+                                hover
+                            />
+                        </Link>
+                    );
+                })}
             </div>
         </div>
     );
