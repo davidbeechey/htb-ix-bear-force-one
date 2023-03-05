@@ -54,11 +54,11 @@ This project deploys several IoT microcontrollers to measure and collect data to
 - An LCD Display
 - A sensor for monitoring the surrounding enviroment
 
-This sensor can be customised and easily configured for use in the module prior to installation. An example of the module schematic can be found [here](https://github.com/davidbeechey/htb-ix-bear-force-one/blob/main/hardware/docs/Sensor%20Module%20Schematic.jpg). Once powered, the module maintains its internet connection and sends any gathered data to the internet for analysis. The ESP32 was chosen both for its ease of use and familiarity, being programmable in C++, and also for having WiFi capabilities included out-the-box. The LCD display allows users to observe the real time measurements from the sensor on the module itself. If values become critical, a buzzer sounds to alert nearby users of the problem.
+This sensor can be customised and easily configured for use in the module prior to installation. An example of the module schematic is shown below. Once powered, the module maintains its internet connection and sends any gathered data to the internet for analysis. The ESP32 was chosen both for its ease of use and familiarity, being programmable in C++, and also for having WiFi capabilities included out-the-box. The LCD display allows users to observe the real time measurements from the sensor on the module itself. If values become critical, a buzzer sounds to alert nearby users of the problem.
 
 The current implementation supports measuring CO2 levels, generating a [VOC Index](https://en.wikipedia.org/wiki/Volatile_organic_compound), measuring the quality of drinking water from water fountains, and monitoring power usage. However, as stated before, code for any additional type of sensor can be implemented with ease.
 
-![image](https://user-images.githubusercontent.com/58626285/222953574-f3f84ff1-1722-4edd-bb6f-a6ed8e7edfb4.png)
+![image](https://github.com/davidbeechey/htb-ix-bear-force-one/blob/main/hardware/docs/Sensor%20Module%20Schematic.jpg)
 
 ## SGD Innovation Goals:
 
