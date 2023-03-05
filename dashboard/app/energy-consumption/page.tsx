@@ -2,11 +2,12 @@ import { Card } from "@/components";
 import axios from "axios";
 import Link from "next/link";
 import { Sensor } from "../types";
-import AirQualityGraph from "./AirQualityGraph";
+import EnergyConsumptionGraph from "./EnergyConsumptionGraph";
+import HeatMap from "./HeatMap";
 
-async function getAirQuality() {
+async function getEnergyConsumption() {
     const sensorsData = await axios
-        .get("https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=co2")
+        .get("https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=energy")
         .then((res) => res.data);
 
     const sensors: Sensor[] = sensorsData.sensors || [];
@@ -26,25 +27,17 @@ async function getCampuses() {
     return campuses;
 }
 
-export default async function AirQuality() {
-    const sensors = await getAirQuality();
+export default async function EnergyConsumption() {
+    const sensors = await getEnergyConsumption();
     const campuses = await getCampuses();
 
     console.log("sensors", sensors);
     console.log("campuses", campuses);
 
-    // TODO: temp, to be replaced with Ishan's function for averaging sensors
-    const averageAirQuality = sensors[0];
-
     return (
         <div className="space-y-4">
             <div className="space-y-4">
-                <AirQualityGraph
-                    data={averageAirQuality.data}
-                    title="Average Air Quality"
-                    subtitle="Across all sensors"
-                    timestamps={averageAirQuality.timestamps}
-                />
+                <HeatMap sensors={sensors} />
             </div>
             <div className="grid grid-cols-2 gap-4">
                 {campuses.map((campus) => {
@@ -53,7 +46,7 @@ export default async function AirQuality() {
                     if (!averageSensor) return null;
                     return (
                         <Link href={`/air-quality/${campus}`}>
-                            <AirQualityGraph
+                            <EnergyConsumptionGraph
                                 data={averageSensor.data}
                                 title={campus}
                                 subtitle="Average Air Quality"
