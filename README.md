@@ -54,4 +54,4 @@ Additional Costs (estimates):
 - AWS hosting cost - depends on user-base (ignoring in calculation)
 
 **Results**:   
-Assuming each building takes 4 sensor packs and there are 4 buildings on one campus, the total price for a campus would be £485.52 (4*91.48 + 4 * 25 + 20) - rounding up -> £500
+Assuming each building takes 4 sensor packs and there are 4 buildings on one campus, the total price for a campus would be £485.52 (4 * 4 * 91.48 + 4 * 25 + 20) - rounding up -> £1,600
