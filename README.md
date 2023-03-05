@@ -14,7 +14,33 @@ The project allows for a high degree of scalability across universities of diffe
 
 *Please note that no servers were harmed in the making of this project.*
 
+<p align="center">
+  <strong style=”font-size: 150%;”>Our Focuses:</strong> 
+</p>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/58626285/222949829-eebf8624-2294-474c-bfe3-ac87cc1ffa42.png" width="100" height="100">
+  <img src="https://user-images.githubusercontent.com/58626285/222949840-a8d25fbd-723b-4c42-961c-ab624364206f.png" width="100" height="100">
+  <img src="https://user-images.githubusercontent.com/58626285/222949897-6e4e58b8-b1d9-47d5-9b2e-526a85794e57.png" width="100" height="100">
+</p>
+
+
 ### Software Overview
+
+![software_architecture](https://cdn.discordapp.com/attachments/760925116992585812/1081849623959851018/Screenshot_2023-03-05_at_08.04.01.png)
+
+The project employs a serverless architecture leveraging AWS Lambda and AWS DynamoDB to create rest APIs which are used by both our IOT enabled sensing platforms (described below) as well as the management frontend. The lambda functions are written in Javascript with the AWS-SDK and deployed as REST APIs using AWS's Web API gateway. 
+
+While we were able to design our hardware systems, due to the time constraints we weren't enable to create it physically. Therefore, we implemented some random data generation script for testing nominal behaviour using uniform random data as well as critical and failure conditions using out of bounds values.
+
+Our frontend is powered by Next.js as well as Tailwind CSS and deployed by Vercel to a serverless cloud provider. We picked this stack due to familiarity but also ease of use, which was demonstrated when several members of our team with almost no frontend experience were able to prototype and design components with relative ease. 
+
+To avoid possible cybersecurity failures as well as reduce complexity, we used Auth0 as our authentication and authorisation platforms. We used Auth0 to implement login, registering and authorisation middleware. This also allows out platform to scale with relative ease when a potential user growth spike occurs. 
+
+We are firm believers in open source data and would prioritise the data dashboard being public for democratisation of data but also holding universities accountable to their _self assigned_ goals as well as international standards.   
+
+#### Scoring Algorithm
+The algorithm measures how close our sensor reading is to the goal set by the user. It uses dynamic weightage based on how near the reading is to the goal set. If the reading is below the goal, we made it so that the actual distance (% difference) to the goal is multiplied by a decreasing weightage as the reading gets near the goal. The motivation behind this is essentially getting users to push closer towards their goal regardless of how far away they are at the moment - the actual increase in sustainability gives a bigger rise in the sustainability score when the gap between current readings and goal is wide.  
 
 ### Hardware Overview
 ![draw.io_summary](https://cdn.discordapp.com/attachments/1072492927047172146/1081838317726875698/HardwareSummary.png)
@@ -28,6 +54,8 @@ This project deploys several IoT microcontrollers to measure and collect data to
 This sensor can be customised and easily configured for use in the module prior to installation. An example of the module schematic can be found [here](https://github.com/davidbeechey/htb-ix-bear-force-one/blob/main/hardware/docs/Sensor%20Module%20Schematic.jpg). Once powered, the module maintains its internet connection and sends any gathered data to the internet for analysis. The ESP32 was chosen both for its ease of use and familiarity, being programmable in C++, and also for having WiFi capabilities included out-the-box. The LCD display allows users to observe the real time measurements from the sensor on the module itself. If values become critical, a buzzer sounds to alert nearby users of the problem.
 
 The current implementation supports measuring CO2 levels, generating a [VOC Index](https://en.wikipedia.org/wiki/Volatile_organic_compound), measuring the quality of drinking water from water fountains, and monitoring power usage. However, as stated before, code for any additional type of sensor can be implemented with ease.
+
+![image](https://user-images.githubusercontent.com/58626285/222953574-f3f84ff1-1722-4edd-bb6f-a6ed8e7edfb4.png)
 
 ## SGD Innovation Goals:
 
@@ -55,13 +83,3 @@ We strived to make our solution as afforadable as possible, and with that in min
 
 **Results**:   
 Assuming each building takes 4 sensor packs and there are 4 buildings on one campus, the total price for a campus would be £485.52 (4 * 4 * 91.48 + 4 * 25 + 20) - rounding up -> £1,600
-
-<p align="center">
-  <strong style=”font-size: 150%;”>Our Focuses:</strong> 
-</p>
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/58626285/222949829-eebf8624-2294-474c-bfe3-ac87cc1ffa42.png" width="100" height="100">
-  <img src="https://user-images.githubusercontent.com/58626285/222949840-a8d25fbd-723b-4c42-961c-ab624364206f.png" width="100" height="100">
-  <img src="https://user-images.githubusercontent.com/58626285/222949897-6e4e58b8-b1d9-47d5-9b2e-526a85794e57.png" width="100" height="100">
-</p>
