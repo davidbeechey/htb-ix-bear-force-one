@@ -108,7 +108,7 @@ if __name__ == "__main__":
             building = map_dict[campus][random.randint(
                 0, len(map_dict[campus]) - 1)]
             room = rooms[random.randint(0, len(rooms) - 1)]
-            sensor = MockSensor(sensor_type, campus, building,
+            sensor = MockSensor("University of Edinburgh", sensor_type, campus, building,
                                 room, mode, get_sensor_read(sensor_id, mode))
             for i in range(10):
                 response = sensor.post_to_api()

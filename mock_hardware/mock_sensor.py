@@ -34,13 +34,14 @@ class MockSensor():
     # defining the api-endpoint
     API_ENDPOINT = "https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors"
 
-    def __init__(self, sensor_type: str, campus: str, buidling: str, room: str, mode: Mode, sensor_read: Callable[[], int]):
+    def __init__(self, university: str, sensor_type: str, campus: str, buidling: str, room: str, mode: Mode, sensor_read: Callable[[], int]):
         self.sensor_type = sensor_type
         self.campus = campus
         self.building = buidling
         self.room = room
         self.mode = mode
         self.sensor_read = sensor_read
+        self.university = university
 
     # return a typical value from the sensor (depending on the mode)
 
@@ -53,7 +54,8 @@ class MockSensor():
         data = {'key': self.sensor_type,
                 'location': self.building + ' - ' + self.room,
                 'campus': self.campus,
-                'data': sensor_reading}
+                'data': sensor_reading,
+                'university': self.university}
         # sending post request and saving response as response object
         r = requests.post(url=MockSensor.API_ENDPOINT, json=data)
         return r
