@@ -4,10 +4,10 @@ import axios from "axios";
 import Link from "next/link";
 import AirQualityGraph from "../AirQualityGraph";
 
-async function getAirQualityPerCampus(campus: string) {
+async function getAirQualityPerCampus(campus: string, university: string) {
     const sensorsData = await axios
         .get(
-            `https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=co2&campus=${campus}`
+            `https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=co2&campus=${campus}&university=${university}`
         )
         .then((res) => res.data);
 
@@ -16,8 +16,12 @@ async function getAirQualityPerCampus(campus: string) {
     return sensors;
 }
 
-export default async function AirQuality({ params }: { params: { campus: string } }) {
-    const sensors = await getAirQualityPerCampus(params.campus);
+export default async function AirQuality({
+    params,
+}: {
+    params: { campus: string; university: string };
+}) {
+    const sensors = await getAirQualityPerCampus(params.campus, params.university);
 
     console.log("sensors", sensors);
 

@@ -5,7 +5,7 @@ import { Sensor } from "../../types";
 import EnergyConsumptionGraph from "./EnergyConsumptionGraph";
 import HeatMap from "./HeatMap";
 
-async function getEnergyConsumption() {
+async function getEnergyConsumption(university: string) {
     const sensorsData = await axios
         .get("https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=energy")
         .then((res) => res.data);
@@ -15,10 +15,10 @@ async function getEnergyConsumption() {
     return sensors;
 }
 
-async function getCampuses() {
+async function getCampuses(university: string) {
     const data = await axios
         .get(
-            "https://nbmgmb9465.execute-api.eu-west-1.amazonaws.com/DEV/university?university=University%20of%20Edinburgh"
+            `https://nbmgmb9465.execute-api.eu-west-1.amazonaws.com/DEV/university?university=${university}`
         )
         .then((res) => res.data);
 
@@ -27,9 +27,9 @@ async function getCampuses() {
     return campuses;
 }
 
-export default async function EnergyConsumption() {
-    const sensors = await getEnergyConsumption();
-    const campuses = await getCampuses();
+export default async function EnergyConsumption({ params }: { params: { university: string } }) {
+    const sensors = await getEnergyConsumption(params.university);
+    const campuses = await getCampuses(params.university);
 
     console.log("sensors", sensors);
     console.log("campuses", campuses);
