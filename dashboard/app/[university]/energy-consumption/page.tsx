@@ -7,7 +7,9 @@ import HeatMap from "./HeatMap";
 
 async function getEnergyConsumption(university: string) {
     const sensorsData = await axios
-        .get("https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=energy")
+        .get(
+            `https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=energy&${university}`
+        )
         .then((res) => res.data);
 
     const sensors: Sensor[] = sensorsData.sensors || [];
@@ -34,6 +36,8 @@ export default async function EnergyConsumption({ params }: { params: { universi
     console.log("sensors", sensors);
     console.log("campuses", campuses);
 
+    if (sensors.length === 0) return <div>No sensors found</div>;
+
     const currentEnergyConsumption = sensors.reduce((acc, sensor) => {
         const lastValue = sensor.data[sensor.data.length - 1];
         return acc + lastValue;
@@ -58,7 +62,7 @@ export default async function EnergyConsumption({ params }: { params: { universi
                     const averageSensor = sensors.find((sensor) => sensor.campus === campus);
                     if (!averageSensor) return null;
                     return (
-                        <Link href={`/energy-consumption/${campus}`}>
+                        <Link href={`/${params.university}/energy-consumption/${campus}`}>
                             <EnergyConsumptionGraph
                                 data={averageSensor.data}
                                 title={campus}

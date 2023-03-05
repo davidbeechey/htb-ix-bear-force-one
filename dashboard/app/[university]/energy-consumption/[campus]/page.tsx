@@ -23,6 +23,8 @@ export default async function EnergyConsumption({
 }) {
     const sensors = await getEnergyConsumptionPerCampus(params.campus, params.university);
 
+    if (sensors.length === 0) return <div>No sensors found</div>;
+
     console.log("sensors", sensors);
 
     // TODO: temp, to be replaced with Ishan's function for averaging sensors
