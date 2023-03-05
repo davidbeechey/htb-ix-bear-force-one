@@ -34,10 +34,23 @@ export default async function EnergyConsumption() {
     console.log("sensors", sensors);
     console.log("campuses", campuses);
 
+    const currentEnergyConsumption = sensors.reduce((acc, sensor) => {
+        const lastValue = sensor.data[sensor.data.length - 1];
+        return acc + lastValue;
+    }, 0);
+
     return (
         <div className="space-y-4">
+            <div className="grid grid-cols-3">
+                <Card className="space-y-2">
+                    <h1 className="text-2xl">Current Energy Consumption</h1>
+                    <p className="text-6xl font-bold text-green-500">
+                        {currentEnergyConsumption} W
+                    </p>
+                </Card>
+            </div>
             <div className="space-y-4">
-                <HeatMap sensors={sensors} />
+                <HeatMap sensors={sensors} campuses={campuses} />
             </div>
             <div className="grid grid-cols-2 gap-4">
                 {campuses.map((campus) => {
@@ -45,11 +58,11 @@ export default async function EnergyConsumption() {
                     const averageSensor = sensors.find((sensor) => sensor.campus === campus);
                     if (!averageSensor) return null;
                     return (
-                        <Link href={`/air-quality/${campus}`}>
+                        <Link href={`/energy-consumption/${campus}`}>
                             <EnergyConsumptionGraph
                                 data={averageSensor.data}
                                 title={campus}
-                                subtitle="Average Air Quality"
+                                subtitle="Average Energy Consumption"
                                 timestamps={averageSensor.timestamps}
                                 hover
                             />
