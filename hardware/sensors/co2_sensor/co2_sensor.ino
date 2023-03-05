@@ -60,5 +60,6 @@ void loop()
   }
   co2.displayValues(sensor_status[i]);
   co2.sendData();
+  co2.displayNetworkStatus();
   delay(1000);
 }

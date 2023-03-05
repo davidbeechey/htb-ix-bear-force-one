@@ -61,5 +61,6 @@ void loop()
   }
   voc.displayValues(sensor_status[i]);
   voc.sendData();
+  voc.displayNetworkStatus();
   delay(1000);
 }
