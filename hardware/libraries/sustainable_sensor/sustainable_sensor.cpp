@@ -10,9 +10,8 @@ SensorModule::SensorModule(String sensor_type, String display_name, String campu
   int network_status;
   bool data_server_status;
 
-  // Connect to local network, get real time, and connect to data server
+  // Connect to local network
   network_status = WiFi.begin(SSID, PASSWORD);
-  data_server_status = client.connect(data_server, DATA_SERVER_PORT);
 
   display.init();
   display.backlight();

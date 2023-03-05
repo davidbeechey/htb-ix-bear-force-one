@@ -12,7 +12,6 @@ const String sensor_status[5] = {"Dangerous", "Unhealthy", "Not ideal", "Good", 
 const String network_status[3] = {"Connected", "Disconnected", "Failed"};
 
 // Network constants and objects
-static IPAddress data_server(127, 0, 0, 1);
 static WiFiClient client;
 static HTTPClient http;
 
