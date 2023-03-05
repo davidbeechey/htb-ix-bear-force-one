@@ -15,7 +15,7 @@ export const Card = ({ hover = false, className, children, ...props }: CardProps
         className={cx(
             className,
             "bg-gray-900 p-6 rounded-xl transition-all duration-200",
-            hover && "hover:shadow-lg hover:cursor-pointer hover:border-white"
+            hover && "hover:shadow-lg hover:cursor-pointer hover:bg-gray-800"
         )}
         {...props}
     >
