@@ -25,7 +25,14 @@ void setup()
   if (DEBUG_FLAG)
   {
     Serial.begin(9600);
-    Serial.println("Debug open");
+    if(SD.begin(SD_PIN)){
+      sd_file_ = SD.open(LOGS_FILE, FILE_WRITE);
+      sd_file_.print(millis());
+      sd_file_.print(": ");
+      sd_file_.println("Debug begin.");
+      sd_file_.close();
+    }
+    Serial.println("Debug begin");
   }
 }
 
