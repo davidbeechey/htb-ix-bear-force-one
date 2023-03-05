@@ -67,6 +67,7 @@ void loop(){
   }
   tds.displayValues(sensor_status[i]);
   tds.sendData();
+  tds.displayNetworkStatus();
   delay(1000);
 }
 

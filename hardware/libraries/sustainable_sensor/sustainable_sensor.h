@@ -9,7 +9,8 @@
 #define WARNING_BUZZER 13
 
 const String sensor_status[5] = {"Dangerous", "Unhealthy", "Not ideal", "Good", "Excellent"};
-const String network_status[3] = {"Connected", "Disconnected", "Failed"};
+const String network_states[7] = {"Idle", "SSID Not Found", "Scan Complete", "Connected", "Failed", "Lost", "Disconnected"};
+// int net_state;
 
 // Network constants and objects
 static WiFiClient client;
@@ -25,7 +26,7 @@ public:
   void displayValues(String message);
   void setValue(int value);
   void sendData();
-  void networkConnect();
+  void displayNetworkStatus();
 
 private:
   String sensor_type_;
