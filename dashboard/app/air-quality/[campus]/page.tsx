@@ -3,7 +3,6 @@ import { Card } from "@/components";
 import axios from "axios";
 import Link from "next/link";
 import AirQualityGraph from "../AirQualityGraph";
-import SensorsGrid from "../SensorsGrid";
 
 async function getAirQualityPerCampus(campus: string) {
     const sensorsData = await axios
@@ -36,7 +35,16 @@ export default async function AirQuality({ params }: { params: { campus: string 
                     subtitle={`Across campus: ${params.campus}`}
                 />
             </div>
-            <SensorsGrid sensors={sensors} />
+            <div className="grid grid-cols-3 w-full gap-4">
+                {sensors.map((sensor) => (
+                    <AirQualityGraph
+                        data={sensor.data}
+                        timestamps={sensor.timestamps}
+                        title={sensor.location}
+                        subtitle={sensor.uniqueID}
+                    />
+                ))}
+            </div>
         </div>
     );
 }

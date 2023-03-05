@@ -1,8 +1,8 @@
 "use client";
 
 import { Card } from "@/components";
-import { getGradient, LineGraph } from "@/components/LineGraph";
-import { ChartDataset, ChartData } from "chart.js";
+import { LineGraph } from "@/components/LineGraph";
+import { ChartDataset, ChartData, ChartArea } from "chart.js";
 
 interface EnergyConsumptionGraphProps {
     title: string;
@@ -50,4 +50,13 @@ export default function EnergyConsumptionGraph({
             <LineGraph data={graphData} />
         </Card>
     );
+}
+
+function getGradient(ctx: CanvasRenderingContext2D, chartArea: ChartArea) {
+    const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+    gradient.addColorStop(0, "rgba(6, 122, 8)");
+    gradient.addColorStop(0.5, "rgba(255, 132, 0)");
+    gradient.addColorStop(1, "rgba(255,0,0)");
+
+    return gradient;
 }
