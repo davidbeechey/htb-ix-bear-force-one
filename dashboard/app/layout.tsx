@@ -1,6 +1,7 @@
 import axios from "axios";
 import "./globals.css";
 import { NavLink } from "./NavLink";
+import Providers from "./Providers";
 import { Sensor } from "./types";
 
 export const metadata = {
@@ -30,6 +31,7 @@ const LINKS = [
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
+            <Providers>
             <body className="bg-black text-gray-100">
                 <main>
                     <header className="bg-gray-900 p-8">
@@ -49,6 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     </div>
                 </main>
             </body>
+            </Providers>
         </html>
     );
 }
