@@ -57,11 +57,12 @@ This project deploys several IoT microcontrollers to measure and collect data to
 
 - An ESP32 WiFi enabled microcontroller
 - An LCD Display
+- A micro SD card
 - A sensor for monitoring the surrounding enviroment
 
-This sensor can be customised and easily configured for use in the module prior to installation. An example of the module schematic is shown below. Once powered, the module maintains its internet connection and sends any gathered data to the internet for analysis. The ESP32 was chosen both for its ease of use and familiarity, being programmable in C++, and also for having WiFi capabilities included out-the-box. The LCD display allows users to observe the real time measurements from the sensor on the module itself. If values become critical, a buzzer sounds to alert nearby users of the problem.
+This sensor can be customised and easily configured for use in the module prior to installation. An example of the module schematic is shown below. Once powered, the module maintains its internet connection and sends any gathered data to the internet for analysis. However, in case the module is unable to connect to the internet, all data values (and debug logs, if enabled) will be saved to the local micro SD card. The ESP32 was chosen both for its ease of use and familiarity, being programmable in C++, and also for having WiFi capabilities included out-the-box. The LCD display allows users to observe the real time measurements from the sensor on the module itself. If values become critical, a buzzer sounds to alert nearby users of the problem.
 
-The current implementation supports measuring CO2 levels, generating a [VOC Index](https://en.wikipedia.org/wiki/Volatile_organic_compound), measuring the quality of drinking water from water fountains, and monitoring power usage. However, as stated before, code for any additional type of sensor can be implemented with ease.
+The current implementation supports measuring CO2 levels, generating a [VOC Index](https://en.wikipedia.org/wiki/Volatile_organic_compound), [measuring the quality of drinking water](https://en.wikipedia.org/wiki/Total_dissolved_solids) from water fountains, and monitoring power usage. However, as stated before, code for any additional type of sensor can be implemented with ease.
 
 ![image](https://github.com/davidbeechey/htb-ix-bear-force-one/blob/main/hardware/docs/Sensor%20Module%20Schematic.jpg)
 
