@@ -73,7 +73,7 @@ export const handler = async (event, context) => {
         let unique_identifiers = new Set(result.Items.map((item) => item.identifier))
         responseBody = {
           "sensors": [...unique_identifiers].map((identifier) => {
-            let filtered = result.Items.filter((item) => item.identifier == identifier)
+            let filtered = result.Items.filter((item) => item.identifier == identifier).sort((a, b) => new Date(a.time) - new Date(b.time));
             return {
               "campus": filtered[0].campus,
               "location": filtered[0].location,
@@ -86,6 +86,13 @@ export const handler = async (event, context) => {
         break;
       case 'POST':
         let eventBody = JSON.parse(event.body)
+        if (eventBody.data < 0) {
+          statusCode = 400;
+          responseBody = {
+            msg: 'Bad Request: Invalid data'
+          }
+          break;
+        }
         body = await dynamo.send(
           new PutCommand({
             TableName: tableName,
