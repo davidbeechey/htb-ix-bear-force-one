@@ -27,11 +27,14 @@ export default async function AirQuality({ params }: { params: { campus: string 
 
     return (
         <div className="space-y-4">
+            <h1 className="text-3xl font-light">Campus: {params.campus}</h1>
             <div className="space-y-4">
-                <Card>
-                    <h1 className="text-3xl">All Sensors</h1>
-                </Card>
-                <AirQualityGraph sensor={{ ...averageAirQuality, campus: "" }} />
+                <AirQualityGraph
+                    data={averageAirQuality.data}
+                    timestamps={averageAirQuality.timestamps}
+                    title="Average Air Quality"
+                    subtitle={`Across campus: ${params.campus}`}
+                />
             </div>
             <div className="space-y-4">
                 <Card>

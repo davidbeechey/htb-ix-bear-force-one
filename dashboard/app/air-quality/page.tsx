@@ -4,8 +4,6 @@ import Link from "next/link";
 import { Sensor } from "../types";
 import AirQualityGraph from "./AirQualityGraph";
 
-const BASE_URL = "https://nbmgmb9465.execute-api.eu-west-1.amazonaws.com/DEV";
-
 async function getAirQuality() {
     const sensorsData = await axios
         .get("https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=co2_mock")
@@ -41,10 +39,12 @@ export default async function AirQuality() {
     return (
         <div className="space-y-4">
             <div className="space-y-4">
-                <Card>
-                    <h1 className="text-3xl">All Sensors</h1>
-                </Card>
-                <AirQualityGraph sensor={averageAirQuality} />
+                <AirQualityGraph
+                    data={averageAirQuality.data}
+                    title="Average Air Quality"
+                    subtitle="Across all sensors"
+                    timestamps={averageAirQuality.timestamps}
+                />
             </div>
             <div className="space-y-4">
                 <Card>
@@ -57,7 +57,13 @@ export default async function AirQuality() {
                         if (!averageSensor) return null;
                         return (
                             <Link href={`/air-quality/${campus}`}>
-                                <AirQualityGraph sensor={averageSensor} hover />
+                                <AirQualityGraph
+                                    data={averageSensor.data}
+                                    title={campus}
+                                    subtitle="Average Air Quality"
+                                    timestamps={averageSensor.timestamps}
+                                    hover
+                                />
                             </Link>
                         );
                     })}
