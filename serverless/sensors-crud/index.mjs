@@ -87,7 +87,7 @@ export const handler = async (event, context) => {
       case 'POST':
         let eventBody = JSON.parse(event.body)
         if (eventBody.data < 0) {
-          statusCode = 400;
+          responseCode = 400;
           responseBody = {
             msg: 'Bad Request: Invalid data'
           }
