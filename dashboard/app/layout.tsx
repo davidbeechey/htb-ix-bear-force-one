@@ -1,5 +1,6 @@
 import "./globals.css";
 import { NavLink } from "./NavLink";
+import Providers from "./Providers";
 
 export const metadata = {
     title: "Sustainability Management System",
@@ -28,6 +29,7 @@ const LINKS = [
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
+            <Providers>
             <body className="bg-black text-gray-100">
                 <main>
                     <header className="bg-gray-900 p-8">
@@ -47,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </div>
                 </main>
             </body>
+            </Providers>
         </html>
     );
 }
