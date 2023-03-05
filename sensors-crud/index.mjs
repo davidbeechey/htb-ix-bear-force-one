@@ -26,7 +26,8 @@ export const handler = async (event, context) => {
           let location = decodeURIComponent(event.queryStringParameters.location) || 'none'
           let campus = decodeURIComponent(event.queryStringParameters.campus) || 'none'
           let type = decodeURIComponent(event.queryStringParameters.type) || 'none'
-          if(type == 'none' && location == 'none' && campus == 'none') {
+          console.log("params", location, campus, type)
+          if (type == 'none' && campus == 'none' && location == 'none') {
             responseCode = 400;
             responseBody = {
               msg: 'Bad request'
@@ -37,27 +38,42 @@ export const handler = async (event, context) => {
             TableName: tableName,
             FilterExpression: '#ID = :ID and #campus = :campusval and #location = :locationval',
             ExpressionAttributeNames: {
-                '#ID': 'ID',
-                '#campus': 'campus',
-                '#location': 'location',
+              '#ID': 'ID',
+              '#campus': 'campus',
+              '#location': 'location',
             },
             ExpressionAttributeValues: {
-                ':ID': type,
-                ':campusval': campus,
-                ':locationval': location,
+              ':ID': type,
+              ':campusval': campus,
+              ':locationval': location,
             },
-        };
+          };
           const result = await dynamo.send(new ScanCommand(params));
+          console.log("result", result)
           responseBody = {
-            sensors: result
+            "campus": campus,
+            "location": location,
+            "uniqueID": result.Items[0].identifier,
+            "timestamps": result.Items.map((item) => item.time),
+            "data": result.Items.map((item) => item.data)
           }
           break;
         }
-        body = await dynamo.send(
+        let result = await dynamo.send(
           new ScanCommand({ TableName: tableName })
         );
+        let unique_identifiers = new Set(result.Items.map((item) => item.identifier))
         responseBody = {
-          sensors: body
+          "sensors": [...unique_identifiers].map((identifier) => {
+            let filtered = result.Items.filter((item) => item.identifier == identifier)
+            return {
+              "campus": filtered[0].campus,
+              "location": filtered[0].location,
+              "uniqueID": filtered[0].identifier,
+              "timestamps": filtered.map((item) => item.time),
+              "data": filtered.map((item) => item.data)
+            }
+          })
         }
         break;
       case 'POST':
@@ -68,9 +84,11 @@ export const handler = async (event, context) => {
             Item: {
               ID: eventBody.key,
               uniqueID: `${eventBody.key}-${context.awsRequestId}`,
+              identifier: `${eventBody.key}-${eventBody.campus}-${eventBody.location}`,
               campus: eventBody.campus,
               location: eventBody.location,
-              data: eventBody.data
+              data: eventBody.data,
+              time: new Date().toISOString()
             },
           })
         );
@@ -88,7 +106,7 @@ export const handler = async (event, context) => {
 
   let response = {
     statusCode: responseCode,
-    body: JSON.stringify({ response: responseBody, event: event })
+    body: JSON.stringify(responseBody)
   };
   console.log("response: " + JSON.stringify(response))
   return response;
