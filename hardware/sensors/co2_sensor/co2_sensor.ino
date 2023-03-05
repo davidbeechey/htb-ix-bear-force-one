@@ -5,7 +5,7 @@
 #define BUILDING "AT"
 #define ROOM "AT5.04"
 
-#define CO2_AIN 14
+#define CO2_AIN A0
 
 #define CO2_INERTIAL_COEFF 0.99
 #define CO2_NUM_OF_READINGS 100
@@ -26,15 +26,14 @@ void setup()
   if (DEBUG_FLAG)
   {
     Serial.begin(9600);
-    if(SD.begin(SD_PIN)){
-      sd_file_ = SD.open(LOGS_FILE, FILE_WRITE);
-      sd_file_.print(millis());
-      sd_file_.print(": ");
+    Serial.println("Debug begin");
+    sd_file_ = co2.startSD(LOGS_FILE);
+    if(sd_file_){
       sd_file_.println("Debug begin.");
       sd_file_.close();
     }
-    Serial.println("Debug begin");
   }
+  pinMode(CO2_AIN, INPUT);
 }
 
 void loop()
@@ -66,7 +65,9 @@ void loop()
     i = 4;
   }
   co2.displayValues(sensor_status[i]);
-  co2.sendData();
-  co2.displayNetworkStatus();
+  if(WiFi.status() != WL_CONNECTED){
+    co2.connectNetwork();
+  }
+  co2.processData();
   delay(1000);
 }

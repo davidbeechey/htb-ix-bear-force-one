@@ -25,14 +25,12 @@ void setup()
   if (DEBUG_FLAG)
   {
     Serial.begin(9600);
-    if(SD.begin(SD_PIN)){
-      sd_file_ = SD.open(LOGS_FILE, FILE_WRITE);
-      sd_file_.print(millis());
-      sd_file_.print(": ");
+    Serial.println("Debug begin");
+    sd_file_ = voc.startSD(LOGS_FILE);
+    if(sd_file_){
       sd_file_.println("Debug begin.");
       sd_file_.close();
     }
-    Serial.println("Debug begin");
   }
 }
 
@@ -67,7 +65,9 @@ void loop()
     i = 4;
   }
   voc.displayValues(sensor_status[i]);
-  voc.sendData();
-  voc.displayNetworkStatus();
+  if(WiFi.status() != WL_CONNECTED){
+    voc.connectNetwork();
+  }
+  voc.processData();
   delay(1000);
 }
