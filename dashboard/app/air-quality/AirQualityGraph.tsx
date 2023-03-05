@@ -7,14 +7,16 @@ import { Sensor } from "../types";
 
 interface AirQualityGraphProps {
     sensor: Sensor;
+    hover?: boolean;
 }
 
-export default function AirQualityGraph({ sensor }: AirQualityGraphProps) {
+export default function AirQualityGraph({ sensor, hover = false }: AirQualityGraphProps) {
     const data: ChartData<"line", number[], string> = {
         labels: sensor.timestamps.map((timestamp) => new Date(timestamp).toLocaleTimeString()),
-        datasets: sensor.data.map((dataset) => {
-            return {
+        datasets: [
+            {
                 data: sensor.data,
+                label: "CO2?",
                 borderColor: function (context) {
                     const chart = context.chart;
                     const { ctx, chartArea } = chart;
@@ -27,12 +29,12 @@ export default function AirQualityGraph({ sensor }: AirQualityGraphProps) {
                 },
                 fill: false,
                 borderWidth: 2,
-            } as ChartDataset<"line", number[]>;
-        }),
+            } as ChartDataset<"line", number[]>,
+        ],
     };
 
     return (
-        <Card className="space-y-6">
+        <Card className="space-y-6" hover={hover}>
             <div>
                 <h1 className="text-xl font-bold">{sensor.campus}</h1>
                 <p>{sensor.location}</p>
