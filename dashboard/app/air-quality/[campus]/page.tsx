@@ -7,7 +7,7 @@ import AirQualityGraph from "../AirQualityGraph";
 async function getAirQualityPerCampus(campus: string) {
     const sensorsData = await axios
         .get(
-            `https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=co2_mock&campus=${campus}`
+            `https://0ux3uyru60.execute-api.eu-west-1.amazonaws.com/DEV/sensors?type=co2&campus=${campus}`
         )
         .then((res) => res.data);
 

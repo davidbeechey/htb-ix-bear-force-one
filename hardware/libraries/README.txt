@@ -1,6 +1,4 @@
-This code is designed for use with the following boards:
-- Arduino MEGA w WiFi shield
-OR
+This code is designed for use with the following board:
 - ESP32 WiFi enabled board
 
 The following libraries are required to run this code for any sensor:
