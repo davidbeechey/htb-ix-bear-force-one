@@ -3,19 +3,27 @@
 import { Card } from "@/components";
 import { getGradient, LineGraph } from "@/components/LineGraph";
 import { ChartDataset, ChartData } from "chart.js";
-import { Sensor } from "../types";
 
 interface AirQualityGraphProps {
-    sensor: Sensor;
+    title: string;
+    subtitle: string;
+    data: number[];
+    timestamps: Date[];
     hover?: boolean;
 }
 
-export default function AirQualityGraph({ sensor, hover = false }: AirQualityGraphProps) {
-    const data: ChartData<"line", number[], string> = {
-        labels: sensor.timestamps.map((timestamp) => new Date(timestamp).toLocaleTimeString()),
+export default function AirQualityGraph({
+    title,
+    subtitle,
+    data,
+    timestamps,
+    hover = false,
+}: AirQualityGraphProps) {
+    const graphData: ChartData<"line", number[], string> = {
+        labels: timestamps.map((timestamp) => new Date(timestamp).toLocaleTimeString()),
         datasets: [
             {
-                data: sensor.data,
+                data: data,
                 label: "CO2?",
                 borderColor: function (context) {
                     const chart = context.chart;
@@ -36,10 +44,10 @@ export default function AirQualityGraph({ sensor, hover = false }: AirQualityGra
     return (
         <Card className="space-y-6" hover={hover}>
             <div>
-                <h1 className="text-xl font-bold">{sensor.campus}</h1>
-                <p>{sensor.location}</p>
+                <h1 className="text-xl font-bold">{title}</h1>
+                <p>{subtitle}</p>
             </div>
-            <LineGraph data={data} />
+            <LineGraph data={graphData} />
         </Card>
     );
 }
